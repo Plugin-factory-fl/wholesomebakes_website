@@ -16,7 +16,9 @@
   <div class="site-wrapper">
     <aside class="sidebar">
       <a href="index.html" class="sidebar-logo">
-        <img src="Assets/Logo_nobg.png" alt="Wholesome Bakes logo">
+        <span class="sidebar-logo-ring">
+          <img src="Assets/Logo_nobg.png" alt="Wholesome Bakes logo">
+        </span>
       </a>
       <nav aria-label="Main navigation">
         <ul class="sidebar-nav">
@@ -25,18 +27,22 @@
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
+      <div class="sidebar-social">
+        <a class="btn-social-sidebar" href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="btn-social-sidebar" href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+      </div>
       <p class="sidebar-footer">St. Augustine, Florida</p>
     </aside>
 
     <main class="main-content">
-      <section class="section">
-        <header class="page-header">
+      <section class="section content-centered">
+        <header class="page-header animate-in">
           <h1>Product Gallery</h1>
           <p class="lead">A taste of what we bake — every item is gluten-free and made with care in St. Augustine, Florida.</p>
           <p class="usp">Gluten Free Products that are actually delicious</p>
         </header>
 
-        <div class="gallery-grid">
+        <div class="gallery-grid animate-in">
           <figure class="gallery-item"><img src="Assets/Product%20Images/1.jpg" alt="Wholesome Bakes product 1"></figure>
           <figure class="gallery-item"><img src="Assets/Product%20Images/2.jpg" alt="Wholesome Bakes product 2"></figure>
           <figure class="gallery-item"><img src="Assets/Product%20Images/3.jpg" alt="Wholesome Bakes product 3"></figure>
@@ -59,7 +65,7 @@
           <figure class="gallery-item"><img src="Assets/Product%20Images/20.jpg" alt="Wholesome Bakes product 20"></figure>
         </div>
 
-        <p style="margin-top: 2.5rem; text-align: center;">
+        <p class="animate-in" style="margin-top: 2.5rem;">
           <a class="btn btn-primary" href="mailto:hello@wholesomebakes.com?subject=Gallery%20Product%20Inquiry">Ask About an Item</a>
         </p>
       </section>
