@@ -17,6 +17,9 @@
   --shadow-lg: 0 12px 40px rgba(114, 58, 5, 0.18);
   --radius: 14px;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --green: #2e9b52;
+  --green-dark: #248042;
+  --green-glow: rgba(46, 155, 82, 0.5);
 }
 
 @keyframes fadeInUp {
@@ -48,6 +51,17 @@
 @keyframes pulseGlow {
   0%, 100% { box-shadow: 0 0 0 0 var(--pink-glow); }
   50% { box-shadow: 0 0 24px 4px var(--pink-glow); }
+}
+
+@keyframes ctaAttention {
+  0%, 100% {
+    box-shadow: 0 4px 16px var(--green-glow);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 8px 28px rgba(46, 155, 82, 0.65);
+    transform: scale(1.04);
+  }
 }
 
 *,
@@ -314,9 +328,9 @@ h3 {
   background-image:
     linear-gradient(
       180deg,
-      rgba(255, 252, 250, 0.88) 0%,
-      rgba(255, 255, 255, 0.78) 45%,
-      rgba(255, 255, 255, 0.82) 100%
+      rgba(255, 252, 250, 0.44) 0%,
+      rgba(255, 255, 255, 0.39) 45%,
+      rgba(255, 255, 255, 0.41) 100%
     ),
     url("../Assets/Product%20Images/20.jpg");
   background-size: cover;
@@ -474,6 +488,22 @@ h3 {
   color: var(--brown);
 }
 
+.btn-cta {
+  background: var(--green);
+  color: var(--white);
+  border: 2px solid var(--green-dark);
+  animation: ctaAttention 2.2s ease-in-out infinite;
+}
+
+.btn-cta:hover {
+  background: #34ad5c;
+  border-color: var(--green-dark);
+  color: var(--white);
+  animation-play-state: paused;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 32px rgba(46, 155, 82, 0.55);
+}
+
 /* Featured product rows (landing page layout) */
 .section-featured {
   text-align: center;
@@ -554,11 +584,10 @@ h3 {
   box-shadow: var(--shadow-lg);
   border: 4px solid var(--pink);
   width: 100%;
-  max-width: min(100%, 720px);
-  min-height: 420px;
-  aspect-ratio: 3 / 4;
+  max-width: min(100%, 480px);
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: center 20%;
+  object-position: center center;
   transition: transform 0.4s var(--ease-out);
 }
 
@@ -604,49 +633,148 @@ h3 {
   position: relative;
 }
 
-.cta-block .btn-primary {
-  background: linear-gradient(135deg, var(--pink) 0%, #ffb5b5 100%);
-  color: var(--brown);
+.cta-block .btn-cta {
   position: relative;
 }
 
-.cta-block .btn-primary:hover {
-  color: var(--brown);
-  filter: brightness(1.05);
-}
-
-/* Gallery */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.25rem;
-  max-width: 900px;
+/* Gallery slideshow */
+.slideshow {
+  max-width: 920px;
   margin: 0 auto;
 }
 
-.gallery-item {
+.slideshow-main-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.slideshow-main {
+  flex: 1;
+  margin: 0;
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 2px solid transparent;
-  transition: border-color 0.3s var(--ease-out), transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
-}
-
-.gallery-item:hover {
-  border-color: var(--pink);
-  transform: translateY(-6px) scale(1.03);
   box-shadow: var(--shadow-lg);
+  border: 4px solid var(--pink);
+  background: var(--cream);
+  aspect-ratio: 16 / 10;
+  position: relative;
 }
 
-.gallery-item img {
+.slideshow-main img {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.5s var(--ease-out);
+  transition: opacity 0.45s var(--ease-out);
 }
 
-.gallery-item:hover img {
+.slideshow-main img.is-fading {
+  opacity: 0;
+}
+
+.slideshow-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--brown);
+  background: var(--white);
+  color: var(--brown);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+}
+
+.slideshow-arrow:hover {
+  background: var(--brown);
+  color: var(--white);
   transform: scale(1.08);
+}
+
+.slideshow-dock {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 0.5rem;
+}
+
+.slideshow-dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-out), border-color 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+  opacity: 0.65;
+}
+
+.slideshow-dock-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+}
+
+.slideshow-dock-item .dock-thumb {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  background: var(--cream);
+}
+
+.slideshow-dock-item.is-prev .dock-thumb,
+.slideshow-dock-item.is-next .dock-thumb {
+  width: 72px;
+  height: 72px;
+}
+
+.slideshow-dock-item.is-current {
+  opacity: 1;
+  border-color: var(--brown);
+  transform: scale(1.05);
+}
+
+.slideshow-dock-item.is-current .dock-thumb {
+  width: 110px;
+  height: 110px;
+  border: 3px solid var(--pink);
+}
+
+.slideshow-dock-item:hover {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+.dock-label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brown-light);
+}
+
+.slideshow-dock-item.is-current .dock-label {
+  color: var(--brown);
+}
+
+.slideshow-counter {
+  margin-top: 1rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 /* About */
@@ -665,6 +793,9 @@ h3 {
   border: 4px solid var(--brown);
   max-width: 420px;
   width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center center;
   transition: transform 0.4s var(--ease-out);
 }
 
@@ -789,8 +920,28 @@ h3 {
   }
 
   .baker-spotlight img {
-    min-height: 320px;
-    max-width: 100%;
+    max-width: min(100%, 360px);
+  }
+
+  .slideshow-main-wrap {
+    gap: 0.35rem;
+  }
+
+  .slideshow-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .slideshow-dock-item.is-prev .dock-thumb,
+  .slideshow-dock-item.is-next .dock-thumb {
+    width: 56px;
+    height: 56px;
+  }
+
+  .slideshow-dock-item.is-current .dock-thumb {
+    width: 88px;
+    height: 88px;
   }
 }
 
@@ -821,5 +972,9 @@ h3 {
   .animate-in {
     opacity: 1;
     transform: none;
+  }
+
+  .btn-cta {
+    animation: none;
   }
 }
