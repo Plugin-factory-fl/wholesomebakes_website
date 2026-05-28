@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Review your Wholesome Bakes order and call or text to place it.">
+  <title>Wholesome Bakes | Checkout</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <button class="menu-toggle" type="button" aria-label="Open menu">☰</button>
+
+  <div class="site-wrapper">
+    <aside class="sidebar">
+      <a href="index.html" class="sidebar-logo">
+        <span class="sidebar-logo-ring">
+          <img src="Assets/Logo_nobg.png" alt="Wholesome Bakes logo">
+        </span>
+      </a>
+      <nav aria-label="Main navigation">
+        <ul class="sidebar-nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="catalogue.html">Catalogue</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="checkout.html" class="active sidebar-cart-link">Cart <span class="cart-badge" data-cart-count hidden>0</span></a></li>
+        </ul>
+      </nav>
+      <div class="sidebar-social">
+        <a class="btn-social-sidebar" href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="btn-social-sidebar" href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+      </div>
+      <p class="sidebar-footer">St. Augustine, Florida</p>
+    </aside>
+
+    <main class="main-content">
+      <section class="section content-centered">
+        <header class="page-header animate-in">
+          <h1>Your Cart</h1>
+        </header>
+
+        <p id="checkout-empty" class="checkout-empty animate-in" hidden>
+          Your cart is empty. <a href="catalogue.html">Browse the catalogue</a> to add treats.
+        </p>
+
+        <div id="checkout-summary" class="checkout-summary animate-in" hidden>
+          <ul id="checkout-list" class="checkout-list"></ul>
+          <p class="checkout-estimated">Estimated total: <strong id="checkout-total">$0.00</strong></p>
+
+          <div class="checkout-message">
+            <p><strong>Call or text <a href="tel:+19042172764">(904) 217-2764</a> to place this order!</strong></p>
+            <p>Online ordering coming soon. Feel free to take a photo of this list and send it or just say it over the phone.</p>
+          </div>
+
+          <div class="checkout-actions">
+            <a class="btn btn-cta" href="tel:+19042172764">Call or Text to Order</a>
+            <a class="btn btn-outline" href="catalogue.html">Keep Shopping</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

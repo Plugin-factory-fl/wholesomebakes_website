@@ -5,8 +5,9 @@ A simple static website for Wholesome Bakes — gluten-free baking in St. August
 ## Pages
 
 - **Home** (`index.html`) — landing page with contact info, featured products, and baker spotlight
-- **Gallery** (`gallery.html`) — full product photo gallery
-- **About** (`about.html`) — founder bio and event photos
+- **Catalogue** (`catalogue.html`) — shop-style product list with cart
+- **Checkout** (`checkout.html`) — review cart and call/text to order
+- **About** (`about.html`) — Mama Miller bio and event photos
 
 ## GitHub Pages
 
@@ -18,8 +19,6 @@ A simple static website for Wholesome Bakes — gluten-free baking in St. August
 
 ## Local preview
 
-Open `index.html` in a browser, or run a local server:
-
 ```bash
 python3 -m http.server 8000
 ```
@@ -28,6 +27,6 @@ Then visit `http://localhost:8000`.
 
 ## Customize
 
-- Update phone, email, and social links in `index.html`
-- Replace Laura's placeholder bio in `about.html`
-- Swap featured product images and pricing on the home page
+- Update phone and social links in `index.html`
+- Edit product names and prices in `js/products.js`
+- Replace Mama Miller's placeholder bio in `about.html`

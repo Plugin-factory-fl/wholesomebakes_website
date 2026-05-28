@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Wholesome Bakes — delicious gluten-free baked goods made with love in St. Augustine, Florida.">
   <title>Wholesome Bakes | Home</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
@@ -23,8 +25,9 @@
       <nav aria-label="Main navigation">
         <ul class="sidebar-nav">
           <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="catalogue.html">Catalogue</a></li>
           <li><a href="about.html">About</a></li>
+          <li><a href="checkout.html" class="sidebar-cart-link">Cart <span class="cart-badge" data-cart-count hidden>0</span></a></li>
         </ul>
       </nav>
       <div class="sidebar-social">
@@ -37,7 +40,9 @@
     <main class="main-content">
       <header class="hero">
         <div class="hero-inner content-centered">
-          <h1 class="animate-in">Wholesome Bakes</h1>
+          <div class="hero-readable hero-title-block animate-in">
+            <h1>Wholesome Bakes</h1>
+          </div>
           <div class="hero-tagline animate-in">
             <p class="usp">Gluten Free Products that are actually delicious</p>
           </div>
@@ -47,9 +52,8 @@
           </div>
 
           <div class="contact-cta animate-in">
-            <span class="contact-cta-label">Order &amp; Inquiries</span>
-            <a class="contact-cta-phone" href="tel:+19045550123">(904) 555-0123</a>
-            <a class="contact-cta-email" href="mailto:hello@wholesomebakes.com">hello@wholesomebakes.com</a>
+            <span class="contact-cta-label">Call or Text</span>
+            <a class="contact-cta-phone" href="tel:+19042172764">(904) 217-2764</a>
           </div>
         </div>
       </header>
@@ -63,7 +67,7 @@
             <h3>Chocolate Chip Cookies</h3>
             <p class="product-price">$14 / dozen</p>
             <p>Chewy, buttery, and loaded with chocolate — our best-selling cookie, baked fresh to order.</p>
-            <a class="btn btn-cta" href="mailto:hello@wholesomebakes.com?subject=Order%20Chocolate%20Chip%20Cookies">Order Now</a>
+            <a class="btn btn-cta" href="catalogue.html">Order from Catalogue</a>
           </div>
           <div class="product-feature-media">
             <img src="Assets/Product%20Images/18.jpg" alt="Gluten-free chocolate chip cookies">
@@ -78,7 +82,7 @@
             <h3>Lemon Bars</h3>
             <p class="product-price">$18 / pan</p>
             <p>Bright, tangy lemon curd on a buttery gluten-free shortbread crust — a sunny favorite for picnics, brunches, and sweet afternoons in St. Augustine.</p>
-            <a class="btn btn-cta" href="mailto:hello@wholesomebakes.com?subject=Lemon%20Bars%20Order">Order Now</a>
+            <a class="btn btn-cta" href="catalogue.html">Order from Catalogue</a>
           </div>
         </article>
       </section>
@@ -87,24 +91,25 @@
         <div class="baker-spotlight content-centered">
           <div>
             <h2>Meet Your Baker</h2>
-            <p>Behind every loaf and cookie is Laura Miller — bringing years of kitchen passion to gluten-free baking that families actually crave.</p>
-            <p>From local farmers markets to custom orders across St. Augustine, Laura believes wholesome ingredients and careful technique make all the difference.</p>
-            <a class="btn btn-cta" href="about.html">Learn More About Laura</a>
+            <p>Behind every loaf and cookie is Mama Miller — bringing years of kitchen passion to gluten-free baking that families actually crave.</p>
+            <p>From local farmers markets to custom orders across St. Augustine, Mama Miller believes wholesome ingredients and careful technique make all the difference.</p>
+            <a class="btn btn-cta" href="about.html">Meet Mama Miller</a>
           </div>
-          <img src="Assets/Event%20Images/1.jpg" alt="Laura Miller at a local baking event in St. Augustine">
+          <img src="Assets/Event%20Images/1.jpg" alt="Mama Miller at a local baking event in St. Augustine">
         </div>
       </section>
 
       <section class="section content-centered animate-in">
         <div class="cta-block">
           <h2>Ready for something delicious?</h2>
-          <p>Place a custom order, ask about catering, or stop by our next St. Augustine pop-up. We'd love to bake for you.</p>
-          <a class="btn btn-cta" href="mailto:hello@wholesomebakes.com?subject=Wholesome%20Bakes%20Order">Get in Touch</a>
+          <p>Build your order in our catalogue, or call or text to place a custom order for St. Augustine pickup.</p>
+          <a class="btn btn-cta" href="catalogue.html">Shop the Catalogue</a>
         </div>
       </section>
     </main>
   </div>
 
+  <script src="js/cart.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
