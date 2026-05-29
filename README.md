@@ -1,11 +1,11 @@
 # Wholesome Bakes Website
 
-A simple static website for Wholesome Bakes — gluten-free baking in St. Augustine, Florida.
+A simple static website for Wholesome Bakes — gluten friendly baking in St. Augustine, Florida.
 
 ## Pages
 
 - **Home** (`index.html`) — landing page with contact info, featured products, and baker spotlight
-- **Catalogue** (`catalogue.html`) — shop-style product list with cart
+- **Menu** (`menu.html`) — shop-style product list with cart
 - **Checkout** (`checkout.html`) — review cart and call/text to order
 - **About** (`about.html`) — Mama Miller bio and event photos
 

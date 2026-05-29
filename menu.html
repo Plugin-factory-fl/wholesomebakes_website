@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review your Wholesome Bakes order and call or text to place it.">
-  <title>Wholesome Bakes | Checkout</title>
+  <meta name="description" content="Browse the Wholesome Bakes menu — gluten friendly baked goods to order in St. Augustine, Florida.">
+  <title>Wholesome Bakes | Menu</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,8 +25,8 @@
       <nav aria-label="Main navigation">
         <ul class="sidebar-nav">
           <li><a href="index.html">Home</a></li>
-          <li><a href="menu.html">Menu</a></li>
-          <li><a href="checkout.html" class="active sidebar-cart-link">Cart <span class="cart-badge" data-cart-count hidden>0</span></a></li>
+          <li><a href="menu.html" class="active">Menu</a></li>
+          <li><a href="checkout.html" class="sidebar-cart-link">Cart <span class="cart-badge" data-cart-count hidden>0</span></a></li>
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
@@ -40,34 +40,23 @@
     <main class="main-content">
       <section class="section content-centered">
         <header class="page-header animate-in">
-          <h1>Your Cart</h1>
+          <h1>Our Menu</h1>
+          <p class="lead">Build your order from our lineup — add items to your cart, then checkout when you're ready.</p>
+          <p class="usp"><button type="button" class="gluten-friendly-term">Gluten Friendly</button> Products that are actually delicious</p>
         </header>
 
-        <p id="checkout-empty" class="checkout-empty animate-in" hidden>
-          Your cart is empty. <a href="menu.html">Browse the menu</a> to add treats.
-        </p>
-
-        <div id="checkout-summary" class="checkout-summary animate-in" hidden>
-          <ul id="checkout-list" class="checkout-list"></ul>
-          <p class="checkout-estimated">Estimated total: <strong id="checkout-total">$0.00</strong></p>
-
-          <div class="checkout-message">
-            <p><strong>Call or text <a href="tel:+19042172764">(904) 217-2764</a> to place this order!</strong></p>
-            <p>Online ordering coming soon. Feel free to take a photo of this list and send it or just say it over the phone.</p>
-          </div>
-
-          <div class="checkout-actions">
-            <a class="btn btn-cta" href="tel:+19042172764">Call or Text to Order</a>
-            <a class="btn btn-outline" href="menu.html">Keep Shopping</a>
-          </div>
+        <div class="catalogue-toolbar animate-in">
+          <a href="checkout.html" class="btn btn-cta">Checkout <span class="cart-badge cart-badge--inline" data-cart-count hidden>0</span></a>
         </div>
+
+        <div id="catalogue-grid" class="catalogue-grid animate-in"></div>
       </section>
     </main>
   </div>
 
   <script src="js/products.js"></script>
   <script src="js/cart.js"></script>
-  <script src="js/checkout.js"></script>
+  <script src="js/catalogue.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

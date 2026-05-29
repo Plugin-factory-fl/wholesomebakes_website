@@ -311,6 +311,84 @@ h3 {
   box-shadow: var(--shadow);
 }
 
+.gluten-friendly-term {
+  display: inline;
+  padding: 0 0.2em;
+  margin: 0;
+  font: inherit;
+  font-weight: 800;
+  color: var(--brown);
+  background: linear-gradient(180deg, transparent 55%, rgba(255, 230, 150, 0.85) 55%);
+  border: none;
+  border-bottom: 2px solid var(--brown-light);
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.gluten-friendly-term:hover,
+.gluten-friendly-term:focus-visible {
+  color: var(--brown-light);
+  background: rgba(255, 230, 150, 0.95);
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  z-index: 300;
+  max-width: min(92vw, 420px);
+  padding: 1.25rem 2.5rem 1.25rem 1.35rem;
+  background: var(--white);
+  border: 3px solid var(--pink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+  transition: transform 0.35s var(--ease-out), opacity 0.35s var(--ease-out);
+  opacity: 0;
+}
+
+.toast.is-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast p {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.toast p:first-child {
+  margin-bottom: 0.35rem;
+  color: var(--brown);
+}
+
+.toast-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border: none;
+  border-radius: 50%;
+  background: var(--cream);
+  color: var(--brown);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.toast-close:hover {
+  background: var(--pink);
+}
+
 .location-tag {
   display: block;
   font-size: 1rem;
