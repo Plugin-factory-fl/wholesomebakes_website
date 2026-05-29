@@ -501,6 +501,24 @@ h3 {
   white-space: nowrap;
 }
 
+.contact-cta-note {
+  position: relative;
+  z-index: 1;
+  max-width: 22rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+}
+
+.contact-cta-note--checkout {
+  max-width: none;
+  margin: 0.5rem 0 0.75rem;
+  color: var(--text-muted);
+}
+
 .contact-cta-email {
   font-size: clamp(1.25rem, 3.5vw, 2rem);
   opacity: 0.95;
@@ -586,6 +604,10 @@ h3 {
   max-width: min(94vw, 640px);
   padding: 2rem 2.75rem;
   text-align: center;
+}
+
+.contact-cta--modal .contact-cta-note {
+  max-width: 20rem;
 }
 
 .contact-cta--modal .contact-cta-label {

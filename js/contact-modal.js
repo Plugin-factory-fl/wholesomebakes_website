@@ -1,6 +1,8 @@
 (function () {
   const PHONE = "(904) 217-2764";
   const LABEL = "Call or text to order";
+  const NOTE =
+    "Local pickup or delivery in St. Augustine, FL. If unsure, just contact us and ask.";
 
   let modal = document.getElementById("contact-modal");
 
@@ -20,6 +22,9 @@
       '<span class="contact-cta-phone">' +
       PHONE +
       "</span>" +
+      '<p class="contact-cta-note">' +
+      NOTE +
+      "</p>" +
       "</div>" +
       "</div>";
     document.body.appendChild(modal);
