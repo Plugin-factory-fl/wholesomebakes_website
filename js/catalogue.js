@@ -17,6 +17,9 @@
       "<h3>" +
       product.name +
       "</h3>" +
+      '<p class="catalogue-desc">' +
+      (product.description || "") +
+      "</p>" +
       '<p class="catalogue-price">$' +
       product.price +
       " <span>/ " +
