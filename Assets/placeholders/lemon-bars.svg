@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Sunshine Lemon Bars placeholder">
+  <rect width="800" height="600" fill="#fffef5"/>
+  <rect x="140" y="120" width="520" height="360" rx="20" fill="#f7e36a"/>
+  <rect x="140" y="300" width="520" height="180" rx="0 0 20 20" fill="#fff8d6"/>
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="36" fill="#723a05">Sunshine Lemon Bars</text>
+  <text x="400" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6b5344">Photo coming soon</text>
+</svg>

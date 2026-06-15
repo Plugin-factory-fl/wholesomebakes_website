@@ -1,28 +1,190 @@
 const PRODUCTS = [
-  { id: 1, name: "Rustic Boule Loaf", price: 12, unit: "loaf", image: "Assets/Product%20Images/1.jpg", description: "A hearty round loaf with a golden crust and soft, airy crumb — perfect for slicing at the table." },
-  { id: 2, name: "Cinnamon Raisin Bread", price: 11, unit: "loaf", image: "Assets/Product%20Images/2.jpg", description: "Warm cinnamon-swirled bread packed with sweet raisins, ideal for breakfast toast." },
-  { id: 3, name: "Blueberry Muffins", price: 14, unit: "6-pack", image: "Assets/Product%20Images/3.jpg", description: "Tender muffins loaded with juicy blueberries and a light vanilla finish." },
-  { id: 4, name: "Brownie Bites", price: 16, unit: "dozen", image: "Assets/Product%20Images/4.jpg", description: "Rich, fudgy brownie bites with deep chocolate flavor in every two-bite square." },
-  { id: 5, name: "Snickerdoodle Cookies", price: 13, unit: "dozen", image: "Assets/Product%20Images/5.jpg", description: "Soft cookies rolled in cinnamon sugar with a classic crackly top and cozy spice." },
-  { id: 6, name: "Fudge Brownie Square", price: 4, unit: "each", image: "Assets/Product%20Images/6.jpg", description: "One thick, decadent square of dense chocolate brownie for a serious sweet fix." },
-  { id: 7, name: "Chocolate Chip Cookies", price: 14, unit: "dozen", image: "Assets/Product%20Images/7.jpg", description: "Chewy, buttery cookies studded with melty chocolate chips — a crowd favorite." },
-  { id: 8, name: "Pumpkin Bread Loaf", price: 12, unit: "loaf", image: "Assets/Product%20Images/8.jpg", description: "Moist spiced pumpkin bread with warm fall flavors in every slice." },
-  { id: 9, name: "Banana Nut Muffins", price: 14, unit: "6-pack", image: "Assets/Product%20Images/9.jpg", description: "Ripe banana muffins topped with crunchy walnuts for a homestyle morning treat." },
-  { id: 10, name: "Vanilla Cupcakes", price: 18, unit: "6-pack", image: "Assets/Product%20Images/10.jpg", description: "Fluffy vanilla cupcakes finished with smooth, swirled buttercream frosting." },
-  { id: 11, name: "Red Velvet Cupcake", price: 4, unit: "each", image: "Assets/Product%20Images/11.jpg", description: "A single red velvet cupcake with cocoa notes and creamy frosting on top." },
-  { id: 12, name: "Almond Flour Cookies", price: 13, unit: "dozen", image: "Assets/Product%20Images/12.jpg", description: "Lightly crisp cookies with a nutty almond flavor and delicate sweetness." },
-  { id: 13, name: "Carrot Cake Slice", price: 6, unit: "slice", image: "Assets/Product%20Images/13.jpg", description: "Spiced carrot cake slice with walnuts and classic cream cheese frosting." },
-  { id: 14, name: "Celebration Layer Cake", price: 45, unit: "cake", image: "Assets/Product%20Images/14.jpg", description: "A custom stacked layer cake made to order for birthdays and special occasions." },
-  { id: 15, name: "Oatmeal Raisin Cookies", price: 13, unit: "dozen", image: "Assets/Product%20Images/15.jpg", description: "Hearty oatmeal cookies with plump raisins and a hint of brown sugar warmth." },
-  { id: 16, name: "Lemon Bars", price: 18, unit: "pan", image: "Assets/Product%20Images/16.jpg", description: "Tangy lemon curd on a buttery shortbread base, dusted with powdered sugar." },
-  { id: 17, name: "Chocolate Ganache Tart", price: 22, unit: "tart", image: "Assets/Product%20Images/17.jpg", description: "Silky chocolate ganache in a crisp tart shell — an elegant dessert for sharing." },
-  { id: 18, name: "Double Chocolate Cookies", price: 14, unit: "dozen", image: "Assets/Product%20Images/18.jpg", description: "Deep cocoa cookies with chocolate chips for an extra-rich chocolate lover's dozen." },
-  { id: 19, name: "Strawberry Shortcake Cup", price: 5, unit: "each", image: "Assets/Product%20Images/19.jpg", description: "A single-serve cup of biscuit, fresh strawberries, and lightly sweetened cream." },
-  { id: 20, name: "Artisan Sourdough Round", price: 14, unit: "loaf", image: "Assets/Product%20Images/20.jpg", description: "Slow-fermented sourdough round with a tangy aroma and chewy, open crumb." },
+  {
+    id: 1,
+    name: "Chocolate Brownies",
+    image: "Assets/placeholders/brownies.svg",
+    description:
+      "Rich, fudgy chocolate brownies baked in an 8×8 pan. Available gluten friendly or regular.",
+    glutenOptions: ["Gluten Friendly", "Regular"],
+    price: 15,
+    unit: "8×8 pan",
+    addOns: [
+      { id: "ganache", label: "Ganache frosting", price: 2 },
+      { id: "nuts", label: "Nuts", price: 2 },
+    ],
+  },
+  {
+    id: 2,
+    name: "Chocolate Chip Cookies",
+    image: "Assets/placeholders/cookies.svg",
+    description:
+      "Chewy, buttery cookies loaded with chocolate chips. Available gluten friendly or regular.",
+    glutenOptions: ["Gluten Friendly", "Regular"],
+    variants: [
+      { id: "half", label: "1/2 dozen", price: 10, unit: "1/2 dozen" },
+      { id: "dozen", label: "1 dozen", price: 15, unit: "dozen" },
+    ],
+  },
+  {
+    id: 3,
+    name: "Sourdough Sandwich Bread",
+    image: "Assets/placeholders/sourdough.svg",
+    description:
+      "Classic 9×5 sourdough sandwich loaf — plain or with everything bagel seasoning.",
+    styleOptions: [
+      { id: "plain", label: "Plain" },
+      { id: "everything", label: "Everything bagel seasoning" },
+    ],
+    variants: [
+      { id: "single", label: "1 loaf (9×5)", price: 8, unit: "loaf" },
+      { id: "pair", label: "2 loaves", price: 12, unit: "2 loaves" },
+    ],
+  },
+  {
+    id: 4,
+    name: "Sunshine Lemon Bars",
+    image: "Assets/placeholders/lemon-bars.svg",
+    description:
+      "Bright, tangy lemon bars on a buttery shortbread crust in an 8×8 pan. Available gluten friendly or regular.",
+    glutenOptions: ["Gluten Friendly", "Regular"],
+    price: 15,
+    unit: "8×8 pan",
+  },
 ];
 
 function getProductById(id) {
   return PRODUCTS.find(function (p) {
     return p.id === id;
   });
+}
+
+function normalizeSelections(product, selections) {
+  const normalized = {
+    gluten: selections.gluten || null,
+    style: selections.style || null,
+    variant: selections.variant || null,
+    addOns: Array.isArray(selections.addOns) ? selections.addOns.slice().sort() : [],
+  };
+
+  if (product.glutenOptions && !normalized.gluten) {
+    normalized.gluten = product.glutenOptions[0];
+  }
+
+  if (product.styleOptions && !normalized.style) {
+    normalized.style = product.styleOptions[0].id;
+  }
+
+  if (product.variants && !normalized.variant) {
+    normalized.variant = product.variants[0].id;
+  }
+
+  return normalized;
+}
+
+function buildLineId(productId, selections) {
+  const parts = [String(productId)];
+
+  if (selections.gluten) parts.push("g:" + selections.gluten);
+  if (selections.style) parts.push("s:" + selections.style);
+  if (selections.variant) parts.push("v:" + selections.variant);
+  if (selections.addOns && selections.addOns.length) {
+    parts.push("a:" + selections.addOns.join(","));
+  }
+
+  return parts.join("|");
+}
+
+function resolveCartLine(product, rawSelections) {
+  if (!product) return null;
+
+  const selections = normalizeSelections(product, rawSelections || {});
+  let unitPrice = product.price || 0;
+  let unit = product.unit || "each";
+  const detailParts = [];
+
+  if (product.glutenOptions && selections.gluten) {
+    detailParts.push(selections.gluten);
+  }
+
+  if (product.styleOptions && selections.style) {
+    const style = product.styleOptions.find(function (opt) {
+      return opt.id === selections.style;
+    });
+    if (style) detailParts.push(style.label);
+  }
+
+  if (product.variants && selections.variant) {
+    const variant = product.variants.find(function (opt) {
+      return opt.id === selections.variant;
+    });
+    if (variant) {
+      unitPrice = variant.price;
+      unit = variant.unit;
+      detailParts.push(variant.label);
+    }
+  } else if (product.unit) {
+    detailParts.push(product.unit);
+  }
+
+  if (product.addOns && selections.addOns.length) {
+    selections.addOns.forEach(function (addOnId) {
+      const addOn = product.addOns.find(function (opt) {
+        return opt.id === addOnId;
+      });
+      if (addOn) {
+        unitPrice += addOn.price;
+        detailParts.push("+" + addOn.label);
+      }
+    });
+  }
+
+  return {
+    lineId: buildLineId(product.id, selections),
+    productId: product.id,
+    selections: selections,
+    name: product.name,
+    image: product.image,
+    unitPrice: unitPrice,
+    unit: unit,
+    details: detailParts.join(" · "),
+  };
+}
+
+function getFeaturedPriceLabel(product) {
+  if (product.variants && product.variants.length) {
+    const prices = product.variants.map(function (v) {
+      return v.price;
+    });
+    const min = Math.min.apply(null, prices);
+    const max = Math.max.apply(null, prices);
+    if (min === max) return "$" + min;
+    return "From $" + min;
+  }
+
+  return "$" + product.price;
+}
+
+function getFeaturedUnitLabel(product) {
+  if (product.variants && product.variants.length) {
+    return product.variants[0].unit;
+  }
+  return product.unit;
+}
+
+function getFeaturedSummary(product) {
+  const parts = [getFeaturedPriceLabel(product) + " / " + getFeaturedUnitLabel(product)];
+
+  if (product.glutenOptions) {
+    parts.push("Gluten friendly or regular");
+  }
+
+  if (product.addOns && product.addOns.length) {
+    parts.push("Add-ons available");
+  }
+
+  if (product.styleOptions) {
+    parts.push("Plain or everything bagel seasoning");
+  }
+
+  return parts.join(" · ");
 }

@@ -6,7 +6,8 @@
   function getCart() {
     try {
       const raw = localStorage.getItem(CART_KEY);
-      return raw ? JSON.parse(raw) : [];
+      const cart = raw ? JSON.parse(raw) : [];
+      return Array.isArray(cart) ? cart : [];
     } catch (e) {
       return [];
     }
@@ -23,26 +24,45 @@
     }, 0);
   }
 
-  function addToCart(productId, quantity) {
-    const qty = Math.max(1, parseInt(quantity, 10) || 1);
+  function addToCart(entry) {
+    const productId =
+      typeof entry === "object" ? entry.productId : entry;
+    const quantity =
+      typeof entry === "object"
+        ? Math.max(1, parseInt(entry.quantity, 10) || 1)
+        : Math.max(1, parseInt(arguments[1], 10) || 1);
+    const selections =
+      typeof entry === "object" && entry.selections ? entry.selections : {};
+
+    const product =
+      typeof getProductById === "function" ? getProductById(productId) : null;
+    if (!product) return getCart();
+
+    const normalized = normalizeSelections(product, selections);
+    const lineId = buildLineId(productId, normalized);
     const cart = getCart();
     const existing = cart.find(function (item) {
-      return item.productId === productId;
+      return item.lineId === lineId;
     });
 
     if (existing) {
-      existing.quantity += qty;
+      existing.quantity += quantity;
     } else {
-      cart.push({ productId: productId, quantity: qty });
+      cart.push({
+        lineId: lineId,
+        productId: productId,
+        quantity: quantity,
+        selections: normalized,
+      });
     }
 
     saveCart(cart);
     return cart;
   }
 
-  function removeFromCart(productId) {
+  function removeFromCart(lineId) {
     const cart = getCart().filter(function (item) {
-      return item.productId !== productId;
+      return item.lineId !== lineId;
     });
     saveCart(cart);
     return cart;
@@ -57,15 +77,19 @@
       .map(function (item) {
         const product =
           typeof getProductById === "function" ? getProductById(item.productId) : null;
-        if (!product) return null;
+        const resolved = resolveCartLine(product, item.selections || {});
+        if (!product || !resolved) return null;
+
         return {
+          lineId: item.lineId,
           productId: item.productId,
           quantity: item.quantity,
-          name: product.name,
-          price: product.price,
-          unit: product.unit,
-          image: product.image,
-          lineTotal: product.price * item.quantity,
+          name: resolved.name,
+          price: resolved.unitPrice,
+          unit: resolved.unit,
+          image: resolved.image,
+          details: resolved.details,
+          lineTotal: resolved.unitPrice * item.quantity,
         };
       })
       .filter(Boolean);

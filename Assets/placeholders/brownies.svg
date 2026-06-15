@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Chocolate Brownies placeholder">
+  <rect width="800" height="600" fill="#f5e6d8"/>
+  <rect x="120" y="100" width="560" height="400" rx="24" fill="#5c3317"/>
+  <text x="400" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="42" fill="#fdfaf7">Chocolate Brownies</text>
+  <text x="400" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#e8d4c4">Photo coming soon</text>
+</svg>

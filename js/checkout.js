@@ -40,10 +40,12 @@
       "<strong>" +
       item.name +
       "</strong>" +
-      "<span>Qty: " +
+      "<span>" +
+      (item.details ? item.details + " · " : "") +
+      "Qty: " +
       item.quantity +
       " · $" +
-      item.price +
+      item.price.toFixed(2) +
       " / " +
       item.unit +
       "</span>" +
@@ -51,8 +53,8 @@
       '<span class="checkout-line-total">$' +
       item.lineTotal.toFixed(2) +
       "</span>" +
-      '<button type="button" class="checkout-remove" data-id="' +
-      item.productId +
+      '<button type="button" class="checkout-remove" data-line-id="' +
+      item.lineId +
       '" aria-label="Remove ' +
       item.name +
       '">×</button>';
@@ -67,7 +69,7 @@
   listEl.addEventListener("click", function (e) {
     const btn = e.target.closest(".checkout-remove");
     if (!btn) return;
-    window.WholesomeCart.removeFromCart(parseInt(btn.getAttribute("data-id"), 10));
+    window.WholesomeCart.removeFromCart(btn.getAttribute("data-line-id"));
     window.location.reload();
   });
 
@@ -98,10 +100,11 @@
       return (
         "- " +
         item.name +
+        (item.details ? " (" + item.details + ")" : "") +
         " x" +
         item.quantity +
         " ($" +
-        item.price +
+        item.price.toFixed(2) +
         " / " +
         item.unit +
         ") — $" +

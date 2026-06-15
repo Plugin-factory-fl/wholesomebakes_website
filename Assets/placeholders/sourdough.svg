@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Sourdough Sandwich Bread placeholder">
+  <rect width="800" height="600" fill="#faf6f0"/>
+  <rect x="220" y="140" width="360" height="300" rx="36" fill="#d4a574"/>
+  <path d="M220 200 Q400 120 580 200" fill="none" stroke="#b8895a" stroke-width="8"/>
+  <text x="400" y="500" text-anchor="middle" font-family="Georgia, serif" font-size="34" fill="#723a05">Sourdough Sandwich Bread</text>
+  <text x="400" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#6b5344">Photo coming soon</text>
+</svg>

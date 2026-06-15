@@ -1055,6 +1055,55 @@ button.btn {
   min-width: 120px;
 }
 
+.catalogue-options {
+  margin: 0 0 1rem;
+}
+
+.catalogue-fieldset {
+  margin: 0 0 0.85rem;
+  padding: 0.75rem 0.85rem;
+  border: 2px solid rgba(114, 58, 5, 0.1);
+  border-radius: 10px;
+  background: var(--cream);
+}
+
+.catalogue-fieldset legend {
+  padding: 0 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--brown);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.catalogue-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.92rem;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.catalogue-choice:last-child {
+  margin-bottom: 0;
+}
+
+.catalogue-choice input {
+  margin-top: 0.2rem;
+  accent-color: var(--brown);
+}
+
+#featured-products .product-feature {
+  margin-bottom: 3.5rem;
+}
+
+#featured-products .product-feature:last-child {
+  margin-bottom: 0;
+}
+
 /* Checkout */
 .checkout-empty {
   max-width: 28rem;
