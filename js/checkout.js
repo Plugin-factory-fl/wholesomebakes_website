@@ -166,16 +166,20 @@
     clearError();
 
     const config = window.WholesomeOrderConfig || {};
-    const accessKey = config.WEB3FORMS_ACCESS_KEY;
+    const submitUrl =
+      config.FORMSUBMIT_URL ||
+      (config.ORDER_EMAIL
+        ? "https://formsubmit.co/ajax/" + encodeURIComponent(config.ORDER_EMAIL)
+        : "");
 
-    if (!accessKey) {
+    if (!submitUrl) {
       showError("Order form is not configured. Please call (904) 217-2764 to place your order.");
       return;
     }
 
     const formData = new FormData(formEl);
 
-    if (formData.get("botcheck")) {
+    if (formData.get("_honey")) {
       return;
     }
 
@@ -212,12 +216,12 @@
 
     const orderMessage = buildOrderMessage(data, cartItems, orderTotal);
     const payload = {
-      access_key: accessKey,
-      subject: "New Wholesome Bakes Order — " + data.name,
-      from_name: "Wholesome Bakes Website",
+      _subject: "New Wholesome Bakes Order — " + data.name,
+      _captcha: "false",
+      _template: "table",
       name: data.name,
       phone: data.phone,
-      email: data.email || "no-reply@shopwholesomebakes.com",
+      email: data.email || "Not provided",
       fulfillment: data.fulfillment,
       address: data.address || "N/A",
       requested_time: data.requested_time || "Not specified",
@@ -226,12 +230,12 @@
     };
 
     if (data.email) {
-      payload.replyto = data.email;
+      payload._replyto = data.email;
     }
 
     setSubmitting(true);
 
-    fetch("https://api.web3forms.com/submit", {
+    fetch(submitUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -243,7 +247,8 @@
         return response.json();
       })
       .then(function (result) {
-        if (!result.success) {
+        const ok = result.success === true || result.success === "true";
+        if (!ok) {
           throw new Error(result.message || "Unable to send your order. Please try again.");
         }
 
