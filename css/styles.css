@@ -987,10 +987,37 @@ button.btn {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  transition: transform 0.4s var(--ease-out);
+  transition: transform 0.4s var(--ease-out), opacity 0.45s var(--ease-out);
+}
+
+.catalogue-card-image--rotator {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--cream);
+}
+
+.catalogue-card-image--rotator img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  opacity: 0;
+}
+
+.catalogue-card-image--rotator img.is-active {
+  opacity: 1;
 }
 
 .catalogue-card:hover .catalogue-card-image img {
+  transform: scale(1.05);
+}
+
+.catalogue-card:hover .catalogue-card-image--rotator img {
+  transform: none;
+}
+
+.catalogue-card:hover .catalogue-card-image--rotator img.is-active {
   transform: scale(1.05);
 }
 

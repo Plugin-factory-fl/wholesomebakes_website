@@ -158,17 +158,58 @@
     priceEl.textContent = label;
   }
 
+  function buildImageHtml(product) {
+    const images = getProductImages(product);
+    if (!images.length) {
+      return '<div class="catalogue-card-image"></div>';
+    }
+
+    if (images.length === 1) {
+      return (
+        '<div class="catalogue-card-image">' +
+        '<img src="' +
+        images[0] +
+        '" alt="' +
+        escapeHtml(product.name) +
+        '">' +
+        "</div>"
+      );
+    }
+
+    let html = '<div class="catalogue-card-image catalogue-card-image--rotator" data-rotator>';
+    images.forEach(function (src, index) {
+      html +=
+        '<img src="' +
+        src +
+        '" alt="' +
+        escapeHtml(product.name) +
+        '"' +
+        (index === 0 ? ' class="is-active"' : "") +
+        ">";
+    });
+    html += "</div>";
+    return html;
+  }
+
+  function initImageRotators(root) {
+    root.querySelectorAll("[data-rotator]").forEach(function (container) {
+      const imgs = container.querySelectorAll("img");
+      if (imgs.length < 2) return;
+
+      let index = 0;
+      window.setInterval(function () {
+        imgs[index].classList.remove("is-active");
+        index = (index + 1) % imgs.length;
+        imgs[index].classList.add("is-active");
+      }, 4000);
+    });
+  }
+
   PRODUCTS.forEach(function (product) {
     const card = document.createElement("article");
     card.className = "catalogue-card";
     card.innerHTML =
-      '<div class="catalogue-card-image">' +
-      '<img src="' +
-      product.image +
-      '" alt="' +
-      escapeHtml(product.name) +
-      '">' +
-      "</div>" +
+      buildImageHtml(product) +
       '<div class="catalogue-card-body">' +
       "<h3>" +
       escapeHtml(product.name) +
@@ -194,6 +235,8 @@
 
     grid.appendChild(card);
   });
+
+  initImageRotators(grid);
 
   grid.addEventListener("click", function (e) {
     const btn = e.target.closest(".catalogue-add");

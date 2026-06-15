@@ -28,6 +28,11 @@
 
     const priceLabel = getFeaturedPriceLabel(product);
     const unitLabel = getFeaturedUnitLabel(product);
+    const images = getProductImages(product);
+    const featuredImage =
+      images.length > 1
+        ? images[Math.floor(Math.random() * images.length)]
+        : getProductImage(product);
 
     article.innerHTML =
       (index % 2 === 0
@@ -51,14 +56,14 @@
           "</div>" +
           '<div class="product-feature-media">' +
           '<img src="' +
-          product.image +
+          featuredImage +
           '" alt="' +
           product.name +
           '">' +
           "</div>"
         : '<div class="product-feature-media">' +
           '<img src="' +
-          product.image +
+          featuredImage +
           '" alt="' +
           product.name +
           '">' +

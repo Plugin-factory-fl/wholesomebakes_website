@@ -1,3 +1,5 @@
+const PRODUCT_IMAGE_BASE = "Assets/Product%20Images/";
+
 const PRODUCTS = [
   {
     id: 1,
@@ -16,7 +18,10 @@ const PRODUCTS = [
   {
     id: 2,
     name: "Chocolate Chip Cookies",
-    image: "Assets/placeholders/cookies.svg",
+    images: [
+      PRODUCT_IMAGE_BASE + "13.jpg",
+      PRODUCT_IMAGE_BASE + "18.jpg",
+    ],
     description:
       "Chewy, buttery cookies loaded with chocolate chips. Available gluten friendly or regular.",
     glutenOptions: ["Gluten Friendly", "Regular"],
@@ -28,7 +33,12 @@ const PRODUCTS = [
   {
     id: 3,
     name: "Sourdough Sandwich Bread",
-    image: "Assets/placeholders/sourdough.svg",
+    images: [
+      PRODUCT_IMAGE_BASE + "6.jpg",
+      PRODUCT_IMAGE_BASE + "4.jpg",
+      PRODUCT_IMAGE_BASE + "1.jpg",
+      PRODUCT_IMAGE_BASE + "2.jpg",
+    ],
     description:
       "Classic 9×5 sourdough sandwich loaf — plain or with everything bagel seasoning.",
     styleOptions: [
@@ -43,7 +53,10 @@ const PRODUCTS = [
   {
     id: 4,
     name: "Sunshine Lemon Bars",
-    image: "Assets/placeholders/lemon-bars.svg",
+    images: [
+      PRODUCT_IMAGE_BASE + "16.jpg",
+      PRODUCT_IMAGE_BASE + "7.jpg",
+    ],
     description:
       "Bright, tangy lemon bars on a buttery shortbread crust in an 8×8 pan. Available gluten friendly or regular.",
     glutenOptions: ["Gluten Friendly", "Regular"],
@@ -51,6 +64,22 @@ const PRODUCTS = [
     unit: "8×8 pan",
   },
 ];
+
+function getProductImages(product) {
+  if (!product) return [];
+  if (product.images && product.images.length) return product.images;
+  if (product.image) return [product.image];
+  return [];
+}
+
+function getProductImage(product, index) {
+  const images = getProductImages(product);
+  if (!images.length) return "";
+  if (typeof index === "number" && index >= 0 && index < images.length) {
+    return images[index];
+  }
+  return images[0];
+}
 
 function getProductById(id) {
   return PRODUCTS.find(function (p) {
@@ -143,7 +172,7 @@ function resolveCartLine(product, rawSelections) {
     productId: product.id,
     selections: selections,
     name: product.name,
-    image: product.image,
+    image: getProductImage(product),
     unitPrice: unitPrice,
     unit: unit,
     details: detailParts.join(" · "),
