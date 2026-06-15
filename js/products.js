@@ -4,7 +4,10 @@ const PRODUCTS = [
   {
     id: 1,
     name: "Chocolate Brownies",
-    image: "Assets/placeholders/brownies.svg",
+    images: [
+      PRODUCT_IMAGE_BASE + "26.jpeg",
+      PRODUCT_IMAGE_BASE + "27.jpeg",
+    ],
     description:
       "Rich, fudgy chocolate brownies baked in an 8×8 pan. Available gluten friendly or regular.",
     glutenOptions: ["Gluten Friendly", "Regular"],
@@ -21,6 +24,7 @@ const PRODUCTS = [
     images: [
       PRODUCT_IMAGE_BASE + "13.jpg",
       PRODUCT_IMAGE_BASE + "18.jpg",
+      PRODUCT_IMAGE_BASE + "23.jpeg",
     ],
     description:
       "Chewy, buttery cookies loaded with chocolate chips. Available gluten friendly or regular.",
@@ -38,6 +42,8 @@ const PRODUCTS = [
       PRODUCT_IMAGE_BASE + "4.jpg",
       PRODUCT_IMAGE_BASE + "1.jpg",
       PRODUCT_IMAGE_BASE + "2.jpg",
+      PRODUCT_IMAGE_BASE + "21.jpeg",
+      PRODUCT_IMAGE_BASE + "22.jpeg",
     ],
     description:
       "Classic 9×5 sourdough sandwich loaf — plain or with everything bagel seasoning.",
@@ -56,6 +62,8 @@ const PRODUCTS = [
     images: [
       PRODUCT_IMAGE_BASE + "16.jpg",
       PRODUCT_IMAGE_BASE + "7.jpg",
+      PRODUCT_IMAGE_BASE + "24.jpeg",
+      PRODUCT_IMAGE_BASE + "25.jpeg",
     ],
     description:
       "Bright, tangy lemon bars on a buttery shortbread crust in an 8×8 pan. Available gluten friendly or regular.",
