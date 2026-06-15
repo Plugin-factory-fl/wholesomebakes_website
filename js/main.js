@@ -113,6 +113,8 @@
     el.classList.add("visible");
   };
 
+  document.querySelectorAll(".hero .animate-in").forEach(show);
+
   if (!("IntersectionObserver" in window)) {
     animated.forEach(show);
     return;
@@ -127,12 +129,27 @@
         }
       });
     },
-    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+    { threshold: 0.08, rootMargin: "0px 0px 0px 0px" }
   );
+
+  function showIfInView(el) {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      show(el);
+      observer.unobserve(el);
+    }
+  }
 
   animated.forEach(function (el) {
     observer.observe(el);
+    showIfInView(el);
   });
 
-  document.querySelectorAll(".hero .animate-in").forEach(show);
+  window.addEventListener(
+    "load",
+    function () {
+      animated.forEach(showIfInView);
+    },
+    { once: true }
+  );
 })();
