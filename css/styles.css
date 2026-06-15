@@ -72,10 +72,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.65;
@@ -495,10 +497,19 @@ h3 {
   font-family: var(--font-heading);
   font-weight: 800;
   color: var(--white);
+  -webkit-text-fill-color: var(--white);
   line-height: 1.2;
   font-size: clamp(2rem, 6vw, 3.25rem);
   letter-spacing: 0.02em;
   white-space: nowrap;
+  text-decoration: none;
+}
+
+.contact-cta a,
+.contact-cta a:hover,
+.contact-cta a:focus-visible {
+  color: var(--white);
+  -webkit-text-fill-color: var(--white);
 }
 
 .contact-cta-note {
@@ -1428,9 +1439,80 @@ button.btn {
     grid-row: 1 / span 2;
     grid-column: 3;
   }
+
+  .catalogue-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 100%;
+  }
+
+  .catalogue-card-body {
+    padding: 1rem 1.1rem 1.2rem;
+  }
+
+  .catalogue-card-body h3 {
+    font-size: 1.05rem;
+  }
+
+  .catalogue-desc {
+    font-size: 0.9rem;
+  }
+
+  .catalogue-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .catalogue-add {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .catalogue-qty {
+    font-size: 16px;
+  }
+
+  .catalogue-toolbar .btn-cta {
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  .contact-cta-phone {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    white-space: normal;
+  }
+
+  .contact-cta {
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+  }
 }
 
 @media (max-width: 480px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .page-header h1 {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .page-header .lead {
+    font-size: 1.05rem;
+  }
+
+  .page-header .usp {
+    font-size: 0.95rem;
+    padding: 0.55rem 1rem;
+  }
+
   .events-grid {
     grid-template-columns: 1fr;
   }
