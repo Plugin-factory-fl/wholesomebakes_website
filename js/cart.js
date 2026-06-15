@@ -78,6 +78,42 @@
       el.textContent = String(count);
       el.hidden = count === 0;
     });
+    updateStickyCart(count);
+  }
+
+  function ensureStickyCart() {
+    let sticky = document.getElementById("sticky-cart");
+    if (!sticky) {
+      sticky = document.createElement("a");
+      sticky.id = "sticky-cart";
+      sticky.className = "sticky-cart-btn";
+      sticky.href = "checkout.html";
+      sticky.setAttribute("aria-label", "View cart and checkout");
+      sticky.hidden = true;
+      document.body.appendChild(sticky);
+    }
+    return sticky;
+  }
+
+  function isCheckoutPage() {
+    return /checkout\.html$/i.test(window.location.pathname);
+  }
+
+  function updateStickyCart(count) {
+    const sticky = ensureStickyCart();
+
+    if (count === 0 || isCheckoutPage()) {
+      sticky.classList.remove("is-visible");
+      sticky.hidden = true;
+      return;
+    }
+
+    sticky.textContent = "Cart (" + count + ")";
+    sticky.setAttribute("aria-label", "View cart with " + count + " items");
+    sticky.hidden = false;
+    requestAnimationFrame(function () {
+      sticky.classList.add("is-visible");
+    });
   }
 
   window.WholesomeCart = {

@@ -6,7 +6,7 @@ A simple static website for Wholesome Bakes — gluten friendly baking in St. Au
 
 - **Home** (`index.html`) — landing page with contact info, featured products, and baker spotlight
 - **Menu** (`menu.html`) — shop-style product list with cart
-- **Checkout** (`checkout.html`) — review cart and call/text to order
+- **Checkout** (`checkout.html`) — review cart and place an order (emailed to the bakery)
 - **About** (`about.html`) — Mama Miller bio and event photos
 
 ## GitHub Pages

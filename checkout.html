@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review your Wholesome Bakes order and call or text to place it.">
+  <meta name="description" content="Review your Wholesome Bakes cart and place your order online.">
   <title>Wholesome Bakes | Checkout</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -51,15 +51,74 @@
           <ul id="checkout-list" class="checkout-list"></ul>
           <p class="checkout-estimated">Estimated total: <strong id="checkout-total">$0.00</strong></p>
 
-          <div class="checkout-message">
-            <p><strong>Call or text <button type="button" class="checkout-phone-link" data-contact-modal>(904) 217-2764</button> to place this order!</strong></p>
-            <p class="contact-cta-note contact-cta-note--checkout">Local pickup or delivery in St. Augustine, FL. If unsure, just contact us and ask.</p>
-            <p>Online ordering coming soon. Feel free to take a photo of this list and send it or just say it over the phone.</p>
-          </div>
+          <form id="checkout-form" class="checkout-form" novalidate>
+            <h2 class="checkout-form-title">Place your order</h2>
+            <p class="checkout-form-lead">No payment online yet — we&rsquo;ll confirm your order and arrange payment when we reach out.</p>
 
+            <input type="checkbox" name="botcheck" class="checkout-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+            <div class="checkout-field">
+              <label for="order-name">Name <span class="checkout-required">*</span></label>
+              <input type="text" id="order-name" name="name" required autocomplete="name">
+            </div>
+
+            <div class="checkout-field">
+              <label for="order-phone">Phone <span class="checkout-required">*</span></label>
+              <input type="tel" id="order-phone" name="phone" required autocomplete="tel" placeholder="(904) 555-1234">
+            </div>
+
+            <div class="checkout-field">
+              <label for="order-email">Email <span class="checkout-optional">(optional)</span></label>
+              <input type="email" id="order-email" name="email" autocomplete="email">
+            </div>
+
+            <fieldset class="checkout-field checkout-fieldset">
+              <legend>Fulfillment <span class="checkout-required">*</span></legend>
+              <label class="checkout-radio">
+                <input type="radio" name="fulfillment" value="Pickup" checked>
+                Pickup
+              </label>
+              <label class="checkout-radio">
+                <input type="radio" name="fulfillment" value="Delivery">
+                Delivery
+              </label>
+            </fieldset>
+
+            <div class="checkout-field" id="order-address-field" hidden>
+              <label for="order-address">Delivery address <span class="checkout-required">*</span></label>
+              <input type="text" id="order-address" name="address" autocomplete="street-address" placeholder="Street, city, ZIP">
+            </div>
+
+            <div class="checkout-field">
+              <label for="order-datetime">Requested date &amp; time <span class="checkout-optional">(optional)</span></label>
+              <input type="text" id="order-datetime" name="requested_time" placeholder="e.g. Saturday morning">
+            </div>
+
+            <div class="checkout-field">
+              <label for="order-notes">Notes <span class="checkout-optional">(optional)</span></label>
+              <textarea id="order-notes" name="notes" rows="3" placeholder="Allergies, special requests, etc."></textarea>
+            </div>
+
+            <p id="checkout-error" class="checkout-error" role="alert" hidden></p>
+
+            <div class="checkout-actions">
+              <button type="submit" class="btn btn-cta" id="checkout-submit">Place Order</button>
+              <a class="btn btn-outline" href="menu.html">Keep Shopping</a>
+            </div>
+
+            <p class="contact-cta-note contact-cta-note--checkout">Local pickup or delivery in St. Augustine, FL. Questions? Call or text <a href="tel:+19042172764">(904) 217-2764</a>.</p>
+          </form>
+        </div>
+
+        <div id="checkout-success" class="checkout-success animate-in" hidden>
+          <div class="checkout-message">
+            <p><strong>Thank you — your order was sent!</strong></p>
+            <p>We&rsquo;ll reach out soon to confirm pickup or delivery and payment details.</p>
+            <p>Questions? Call or text <a href="tel:+19042172764">(904) 217-2764</a>.</p>
+          </div>
           <div class="checkout-actions">
-            <button type="button" class="btn btn-cta" data-contact-modal>Call or Text to Order</button>
-            <a class="btn btn-outline" href="menu.html">Keep Shopping</a>
+            <a class="btn btn-cta" href="menu.html">Back to Menu</a>
+            <a class="btn btn-outline" href="index.html">Home</a>
           </div>
         </div>
       </section>
@@ -68,8 +127,8 @@
 
   <script src="js/products.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/order-config.js"></script>
   <script src="js/checkout.js"></script>
-  <script src="js/contact-modal.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
