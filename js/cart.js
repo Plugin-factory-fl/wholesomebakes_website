@@ -101,16 +101,19 @@
 
   function updateStickyCart(count) {
     const sticky = ensureStickyCart();
+    const main = document.querySelector(".main-content");
 
     if (count === 0 || isCheckoutPage()) {
       sticky.classList.remove("is-visible");
       sticky.hidden = true;
+      if (main) main.classList.remove("main-content--has-sticky-cart");
       return;
     }
 
     sticky.textContent = "Cart (" + count + ")";
     sticky.setAttribute("aria-label", "View cart with " + count + " items");
     sticky.hidden = false;
+    if (main) main.classList.add("main-content--has-sticky-cart");
     requestAnimationFrame(function () {
       sticky.classList.add("is-visible");
     });
