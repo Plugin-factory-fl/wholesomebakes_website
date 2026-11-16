@@ -205,12 +205,23 @@
     });
   }
 
+  const BEST_SELLER_ID = 103;
+
   PRODUCTS.forEach(function (product) {
+    const isBestSeller = product.id === BEST_SELLER_ID;
     const card = document.createElement("article");
-    card.className = "catalogue-card";
+    card.className =
+      "catalogue-card" + (isBestSeller ? " catalogue-card--best-seller" : "");
+    card.dataset.productId = String(product.id);
+
+    const bestSellerBadge = isBestSeller
+      ? '<p class="catalogue-best-seller-badge">Best Seller</p>'
+      : "";
+
     card.innerHTML =
       buildImageHtml(product) +
       '<div class="catalogue-card-body">' +
+      bestSellerBadge +
       "<h3>" +
       escapeHtml(product.name) +
       "</h3>" +

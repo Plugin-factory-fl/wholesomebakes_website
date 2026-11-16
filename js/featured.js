@@ -49,7 +49,14 @@
     const featuredImage = getProductImage(product);
 
     const badgeHtml = isHero
-      ? '<p class="featured-badge">October 2026\'s best seller</p>' +
+      ? '<div class="featured-rating" role="img" aria-label="5 out of 5 stars">' +
+        '<span class="featured-star" aria-hidden="true">★</span>' +
+        '<span class="featured-star" aria-hidden="true">★</span>' +
+        '<span class="featured-star" aria-hidden="true">★</span>' +
+        '<span class="featured-star" aria-hidden="true">★</span>' +
+        '<span class="featured-star" aria-hidden="true">★</span>' +
+        "</div>" +
+        '<p class="featured-badge">October 2026\'s best seller</p>' +
         '<p class="featured-kicker">Our customers keep coming back for this loaf.</p>'
       : "";
 

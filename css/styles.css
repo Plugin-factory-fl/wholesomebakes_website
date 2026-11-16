@@ -897,6 +897,21 @@ button.btn {
   padding: 1.25rem 0 0.5rem;
 }
 
+.featured-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.18rem;
+  margin: 0 0 0.45rem;
+  line-height: 1;
+}
+
+.featured-star {
+  color: #c9a227;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 0 rgba(114, 58, 5, 0.12);
+}
+
 .featured-badge {
   display: inline-block;
   margin: 0 0 0.55rem;
@@ -910,6 +925,26 @@ button.btn {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.catalogue-best-seller-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin: 0 0 0.55rem;
+  padding: 0.32rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 39, 0.45);
+  background: linear-gradient(180deg, rgba(255, 250, 235, 0.98) 0%, rgba(248, 236, 204, 0.96) 100%);
+  color: #8a6a12;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalogue-card--best-seller {
+  border-color: rgba(201, 162, 39, 0.35);
 }
 
 .featured-kicker {
