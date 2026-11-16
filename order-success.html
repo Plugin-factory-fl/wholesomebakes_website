@@ -68,6 +68,7 @@
   <script src="js/analytics-config.js"></script>
   <script src="js/analytics.js"></script>
   <script src="js/cart.js"></script>
+  <script src="js/order-config.js"></script>
   <script src="js/main.js"></script>
   <script>
     (function () {
@@ -75,6 +76,20 @@
         window.WholesomeCart.clearCart();
         window.WholesomeCart.updateCartBadge();
       }
+
+      var params = new URLSearchParams(window.location.search);
+      var sessionId = params.get("session_id");
+      var config = window.WholesomeOrderConfig || {};
+      var apiBase = String(config.CHECKOUT_API_URL || "").replace(/\/$/, "");
+
+      if (!sessionId || !apiBase) return;
+
+      fetch(apiBase + "/order-status?session_id=" + encodeURIComponent(sessionId), {
+        method: "GET",
+        headers: { Accept: "application/json" },
+      }).catch(function () {
+        // Fallback email trigger is best effort only.
+      });
     })();
   </script>
 </body>

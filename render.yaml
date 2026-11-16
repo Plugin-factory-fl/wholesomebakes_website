@@ -11,5 +11,13 @@ services:
     envVars:
       - key: STRIPE_SECRET_KEY
         sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: ORDER_NOTIFY_EMAIL
+        sync: false
       - key: ALLOWED_ORIGIN
         value: https://shopwholesomebakes.com

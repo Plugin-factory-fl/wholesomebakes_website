@@ -4,68 +4,152 @@
   const summaryEl = document.getElementById("checkout-summary");
   const errorEl = document.getElementById("checkout-error");
   const submitBtn = document.getElementById("checkout-submit");
+  const totalEl = document.getElementById("checkout-total");
 
   if (!listEl) return;
 
-  const items = window.WholesomeCart.getCartWithDetails();
+  const MIN_QTY = window.WholesomeCart.MIN_QTY || 1;
+  const MAX_QTY = window.WholesomeCart.MAX_QTY || 50;
 
-  if (!items.length) {
+  function money(amount) {
+    return "$" + Number(amount).toFixed(2);
+  }
+
+  function showEmptyState() {
     if (emptyEl) emptyEl.hidden = false;
     if (summaryEl) summaryEl.hidden = true;
     listEl.innerHTML = "";
-    return;
+    if (totalEl) totalEl.textContent = "$0.00";
   }
 
-  if (emptyEl) emptyEl.hidden = true;
-  if (summaryEl) summaryEl.hidden = false;
+  function renderCart() {
+    const items = window.WholesomeCart.getCartWithDetails();
 
-  let total = 0;
-  listEl.innerHTML = "";
+    if (!items.length) {
+      showEmptyState();
+      return;
+    }
 
-  items.forEach(function (item) {
-    total += item.lineTotal;
-    const li = document.createElement("li");
-    li.className = "checkout-line";
-    li.innerHTML =
-      '<img src="' +
-      item.image +
-      '" alt="" class="checkout-line-thumb">' +
-      '<div class="checkout-line-details">' +
-      "<strong>" +
-      item.name +
-      "</strong>" +
-      "<span>" +
-      (item.details ? item.details + " · " : "") +
-      "Qty: " +
-      item.quantity +
-      " · $" +
-      item.price.toFixed(2) +
-      " / " +
-      item.unit +
-      "</span>" +
-      "</div>" +
-      '<span class="checkout-line-total">$' +
-      item.lineTotal.toFixed(2) +
-      "</span>" +
-      '<button type="button" class="checkout-remove" data-line-id="' +
-      item.lineId +
-      '" aria-label="Remove ' +
-      item.name +
-      '">×</button>';
-    listEl.appendChild(li);
-  });
+    if (emptyEl) emptyEl.hidden = true;
+    if (summaryEl) summaryEl.hidden = false;
 
-  const totalEl = document.getElementById("checkout-total");
-  if (totalEl) {
-    totalEl.textContent = "$" + total.toFixed(2);
+    let total = 0;
+    listEl.innerHTML = "";
+
+    items.forEach(function (item) {
+      total += item.lineTotal;
+      const li = document.createElement("li");
+      li.className = "checkout-line";
+      li.dataset.lineId = item.lineId;
+      li.innerHTML =
+        '<img src="' +
+        item.image +
+        '" alt="" class="checkout-line-thumb">' +
+        '<div class="checkout-line-details">' +
+        "<strong>" +
+        item.name +
+        "</strong>" +
+        '<span class="checkout-line-meta">' +
+        (item.details ? item.details + " · " : "") +
+        money(item.price) +
+        " / " +
+        item.unit +
+        "</span>" +
+        '<div class="checkout-qty" role="group" aria-label="Quantity for ' +
+        item.name +
+        '">' +
+        '<button type="button" class="checkout-qty-btn" data-action="decrease" data-line-id="' +
+        item.lineId +
+        '" aria-label="Decrease quantity">−</button>' +
+        '<input type="number" class="checkout-qty-input" inputmode="numeric" min="' +
+        MIN_QTY +
+        '" max="' +
+        MAX_QTY +
+        '" value="' +
+        item.quantity +
+        '" data-line-id="' +
+        item.lineId +
+        '" aria-label="Quantity">' +
+        '<button type="button" class="checkout-qty-btn" data-action="increase" data-line-id="' +
+        item.lineId +
+        '" aria-label="Increase quantity">+</button>' +
+        "</div>" +
+        "</div>" +
+        '<span class="checkout-line-total" data-line-total>' +
+        money(item.lineTotal) +
+        "</span>" +
+        '<button type="button" class="checkout-remove" data-action="remove" data-line-id="' +
+        item.lineId +
+        '" aria-label="Remove ' +
+        item.name +
+        '">Remove</button>';
+      listEl.appendChild(li);
+    });
+
+    if (totalEl) totalEl.textContent = money(total);
+    window.WholesomeCart.updateCartBadge();
+  }
+
+  function applyQuantity(lineId, quantity) {
+    const next = parseInt(quantity, 10);
+    if (!Number.isFinite(next) || next < MIN_QTY) {
+      window.WholesomeCart.removeFromCart(lineId);
+    } else {
+      window.WholesomeCart.setQuantity(lineId, next);
+    }
+    renderCart();
   }
 
   listEl.addEventListener("click", function (e) {
-    const btn = e.target.closest(".checkout-remove");
+    const btn = e.target.closest("[data-action]");
     if (!btn) return;
-    window.WholesomeCart.removeFromCart(btn.getAttribute("data-line-id"));
-    window.location.reload();
+
+    const lineId = btn.getAttribute("data-line-id");
+    const action = btn.getAttribute("data-action");
+    if (!lineId || !action) return;
+
+    const item = window.WholesomeCart.getCart().find(function (entry) {
+      return entry.lineId === lineId;
+    });
+
+    if (action === "remove") {
+      window.WholesomeCart.removeFromCart(lineId);
+      renderCart();
+      return;
+    }
+
+    if (!item) return;
+
+    if (action === "decrease") {
+      if (item.quantity <= MIN_QTY) {
+        window.WholesomeCart.removeFromCart(lineId);
+      } else {
+        window.WholesomeCart.setQuantity(lineId, item.quantity - 1);
+      }
+      renderCart();
+      return;
+    }
+
+    if (action === "increase") {
+      window.WholesomeCart.setQuantity(lineId, item.quantity + 1);
+      renderCart();
+    }
   });
+
+  listEl.addEventListener("change", function (e) {
+    const input = e.target.closest(".checkout-qty-input");
+    if (!input) return;
+    applyQuantity(input.getAttribute("data-line-id"), input.value);
+  });
+
+  listEl.addEventListener("keydown", function (e) {
+    const input = e.target.closest(".checkout-qty-input");
+    if (!input || e.key !== "Enter") return;
+    e.preventDefault();
+    applyQuantity(input.getAttribute("data-line-id"), input.value);
+  });
+
+  renderCart();
 
   if (!submitBtn) return;
 

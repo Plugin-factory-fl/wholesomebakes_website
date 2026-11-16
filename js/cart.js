@@ -39,13 +39,22 @@
     }, 0);
   }
 
+  const MIN_QTY = 1;
+  const MAX_QTY = 50;
+
+  function clampQuantity(quantity) {
+    const parsed = parseInt(quantity, 10);
+    if (!Number.isFinite(parsed)) return MIN_QTY;
+    return Math.min(MAX_QTY, Math.max(MIN_QTY, parsed));
+  }
+
   function addToCart(entry) {
     const productId =
       typeof entry === "object" ? entry.productId : entry;
     const quantity =
       typeof entry === "object"
-        ? Math.max(1, parseInt(entry.quantity, 10) || 1)
-        : Math.max(1, parseInt(arguments[1], 10) || 1);
+        ? clampQuantity(entry.quantity || 1)
+        : clampQuantity(arguments[1] || 1);
     const selections =
       typeof entry === "object" && entry.selections ? entry.selections : {};
 
@@ -61,7 +70,7 @@
     });
 
     if (existing) {
-      existing.quantity += quantity;
+      existing.quantity = clampQuantity(existing.quantity + quantity);
     } else {
       cart.push({
         lineId: lineId,
@@ -79,6 +88,23 @@
     const cart = getCart().filter(function (item) {
       return item.lineId !== lineId;
     });
+    saveCart(cart);
+    return cart;
+  }
+
+  function setQuantity(lineId, quantity) {
+    const next = parseInt(quantity, 10);
+    if (!Number.isFinite(next) || next < MIN_QTY) {
+      return removeFromCart(lineId);
+    }
+
+    const cart = getCart();
+    const item = cart.find(function (entry) {
+      return entry.lineId === lineId;
+    });
+    if (!item) return cart;
+
+    item.quantity = clampQuantity(next);
     saveCart(cart);
     return cart;
   }
@@ -163,11 +189,14 @@
     saveCart: saveCart,
     addToCart: addToCart,
     removeFromCart: removeFromCart,
+    setQuantity: setQuantity,
     clearCart: clearCart,
     getCartCount: getCartCount,
     getCartWithDetails: getCartWithDetails,
     pruneInvalidCartItems: pruneInvalidCartItems,
     updateCartBadge: updateCartBadge,
+    MIN_QTY: MIN_QTY,
+    MAX_QTY: MAX_QTY,
     PHONE_DISPLAY: PHONE_DISPLAY,
     PHONE_TEL: PHONE_TEL,
   };
