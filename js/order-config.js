@@ -1,4 +1,5 @@
 window.WholesomeOrderConfig = {
-  ORDER_EMAIL: "wholesomebakes4u@gmail.com",
-  FORMSUBMIT_URL: "https://formsubmit.co/ajax/wholesomebakes4u@gmail.com",
+  // Set this to your Render checkout API base URL after deploy (no trailing slash).
+  // Example: "https://wholesomebakes-checkout.onrender.com"
+  CHECKOUT_API_URL: "",
 };

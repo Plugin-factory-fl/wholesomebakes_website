@@ -2,12 +2,8 @@
   const listEl = document.getElementById("checkout-list");
   const emptyEl = document.getElementById("checkout-empty");
   const summaryEl = document.getElementById("checkout-summary");
-  const successEl = document.getElementById("checkout-success");
-  const formEl = document.getElementById("checkout-form");
   const errorEl = document.getElementById("checkout-error");
   const submitBtn = document.getElementById("checkout-submit");
-  const addressField = document.getElementById("order-address-field");
-  const addressInput = document.getElementById("order-address");
 
   if (!listEl) return;
 
@@ -16,14 +12,12 @@
   if (!items.length) {
     if (emptyEl) emptyEl.hidden = false;
     if (summaryEl) summaryEl.hidden = true;
-    if (successEl) successEl.hidden = true;
     listEl.innerHTML = "";
     return;
   }
 
   if (emptyEl) emptyEl.hidden = true;
   if (summaryEl) summaryEl.hidden = false;
-  if (successEl) successEl.hidden = true;
 
   let total = 0;
   listEl.innerHTML = "";
@@ -73,78 +67,7 @@
     window.location.reload();
   });
 
-  if (!formEl) return;
-
-  function getFulfillment() {
-    const selected = formEl.querySelector('input[name="fulfillment"]:checked');
-    return selected ? selected.value : "Pickup";
-  }
-
-  function updateAddressField() {
-    const isDelivery = getFulfillment() === "Delivery";
-    if (!addressField || !addressInput) return;
-    addressField.hidden = !isDelivery;
-    addressInput.required = isDelivery;
-    if (!isDelivery) {
-      addressInput.value = "";
-    }
-  }
-
-  formEl.querySelectorAll('input[name="fulfillment"]').forEach(function (radio) {
-    radio.addEventListener("change", updateAddressField);
-  });
-  updateAddressField();
-
-  function formatOrderLines(cartItems, orderTotal) {
-    const lines = cartItems.map(function (item) {
-      return (
-        "- " +
-        item.name +
-        (item.details ? " (" + item.details + ")" : "") +
-        " x" +
-        item.quantity +
-        " ($" +
-        item.price.toFixed(2) +
-        " / " +
-        item.unit +
-        "): $" +
-        item.lineTotal.toFixed(2)
-      );
-    });
-
-    return lines.join("\n") + "\n\nEstimated total: $" + orderTotal.toFixed(2);
-  }
-
-  function buildOrderMessage(data, cartItems, orderTotal) {
-    const parts = [
-      "New Wholesome Bakes website order",
-      "",
-      "Customer: " + data.name,
-      "Phone: " + data.phone,
-    ];
-
-    if (data.email) {
-      parts.push("Email: " + data.email);
-    }
-
-    parts.push("Fulfillment: " + data.fulfillment);
-
-    if (data.fulfillment === "Delivery" && data.address) {
-      parts.push("Delivery address: " + data.address);
-    }
-
-    if (data.requested_time) {
-      parts.push("Requested: " + data.requested_time);
-    }
-
-    if (data.notes) {
-      parts.push("Notes: " + data.notes);
-    }
-
-    parts.push("", "Items:", formatOrderLines(cartItems, orderTotal));
-
-    return parts.join("\n");
-  }
+  if (!submitBtn) return;
 
   function showError(message) {
     if (!errorEl) return;
@@ -159,50 +82,34 @@
   }
 
   function setSubmitting(isSubmitting) {
-    if (!submitBtn) return;
     submitBtn.disabled = isSubmitting;
-    submitBtn.textContent = isSubmitting ? "Sending order…" : "Place Order";
+    submitBtn.textContent = isSubmitting
+      ? "Redirecting to Stripe…"
+      : "Checkout securely with Stripe";
   }
 
-  formEl.addEventListener("submit", function (e) {
-    e.preventDefault();
+  function buildPayload() {
+    const cart = window.WholesomeCart.getCart();
+    return {
+      items: cart.map(function (item) {
+        return {
+          productId: item.productId,
+          quantity: item.quantity,
+        };
+      }),
+    };
+  }
+
+  submitBtn.addEventListener("click", function () {
     clearError();
 
     const config = window.WholesomeOrderConfig || {};
-    const submitUrl =
-      config.FORMSUBMIT_URL ||
-      (config.ORDER_EMAIL
-        ? "https://formsubmit.co/ajax/" + encodeURIComponent(config.ORDER_EMAIL)
-        : "");
+    const apiBase = String(config.CHECKOUT_API_URL || "").replace(/\/$/, "");
 
-    if (!submitUrl) {
-      showError("Order form is not configured. Please call (904) 217-2764 to place your order.");
-      return;
-    }
-
-    const formData = new FormData(formEl);
-
-    if (formData.get("_honey")) {
-      return;
-    }
-
-    const data = {
-      name: String(formData.get("name") || "").trim(),
-      phone: String(formData.get("phone") || "").trim(),
-      email: String(formData.get("email") || "").trim(),
-      fulfillment: getFulfillment(),
-      address: String(formData.get("address") || "").trim(),
-      requested_time: String(formData.get("requested_time") || "").trim(),
-      notes: String(formData.get("notes") || "").trim(),
-    };
-
-    if (!data.name || !data.phone) {
-      showError("Please enter your name and phone number.");
-      return;
-    }
-
-    if (data.fulfillment === "Delivery" && !data.address) {
-      showError("Please enter a delivery address.");
+    if (!apiBase) {
+      showError(
+        "Secure checkout is not connected yet. Please browse the menu and try again soon."
+      );
       return;
     }
 
@@ -212,63 +119,38 @@
       return;
     }
 
-    let orderTotal = 0;
-    cartItems.forEach(function (item) {
-      orderTotal += item.lineTotal;
-    });
-
-    const orderMessage = buildOrderMessage(data, cartItems, orderTotal);
-    const payload = {
-      _subject: "New Wholesome Bakes Order: " + data.name,
-      _captcha: "false",
-      _template: "table",
-      name: data.name,
-      phone: data.phone,
-      email: data.email || "Not provided",
-      fulfillment: data.fulfillment,
-      address: data.address || "N/A",
-      requested_time: data.requested_time || "Not specified",
-      notes: data.notes || "None",
-      message: orderMessage,
-    };
-
-    if (data.email) {
-      payload._replyto = data.email;
-    }
-
     setSubmitting(true);
 
-    fetch(submitUrl, {
+    fetch(apiBase + "/create-checkout-session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(buildPayload()),
     })
       .then(function (response) {
-        return response.json();
+        return response
+          .json()
+          .catch(function () {
+            return {};
+          })
+          .then(function (data) {
+            return { response: response, data: data };
+          });
       })
       .then(function (result) {
-        const ok = result.success === true || result.success === "true";
-        if (!ok) {
-          throw new Error(result.message || "Unable to send your order. Please try again.");
+        if (!result.response.ok || !result.data.url) {
+          throw new Error(
+            result.data.error || "Unable to start secure checkout. Please try again."
+          );
         }
-
-        window.WholesomeCart.clearCart();
-        window.WholesomeCart.updateCartBadge();
-
-        if (summaryEl) summaryEl.hidden = true;
-        if (successEl) successEl.hidden = false;
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        window.location.href = result.data.url;
       })
       .catch(function (err) {
         showError(
-          err.message ||
-            "Something went wrong sending your order. Please call or text (904) 217-2764."
+          err.message || "Something went wrong starting checkout. Please try again."
         );
-      })
-      .finally(function () {
         setSubmitting(false);
       });
   });

@@ -1,0 +1,19 @@
+{
+  "name": "wholesomebakes-checkout-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Stripe Checkout API for Wholesome Bakes",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test test/checkout.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "stripe": "^17.7.0"
+  }
+}

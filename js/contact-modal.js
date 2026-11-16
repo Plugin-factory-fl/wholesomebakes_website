@@ -1,8 +1,8 @@
 (function () {
   const PHONE = "(904) 217-2764";
-  const LABEL = "Call or text to order";
+  const LABEL = "Call or text Mama Miller";
   const NOTE =
-    "Local pickup or delivery in St. Augustine, FL. If unsure, just contact us and ask.";
+    "Questions about an online order or custom bake? We are happy to help in St. Augustine, FL.";
 
   let modal = document.getElementById("contact-modal");
 

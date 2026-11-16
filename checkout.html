@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Review your Wholesome Bakes cart and place your order online.">
+  <meta name="description" content="Review your Wholesome Bakes cart and pay securely online.">
   <title>Wholesome Bakes | Checkout</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -51,74 +51,18 @@
           <ul id="checkout-list" class="checkout-list"></ul>
           <p class="checkout-estimated">Estimated total: <strong id="checkout-total">$0.00</strong></p>
 
-          <form id="checkout-form" class="checkout-form" novalidate>
-            <h2 class="checkout-form-title">Place your order</h2>
-            <p class="checkout-form-lead">No payment online yet. We&rsquo;ll confirm your order and arrange payment when we reach out.</p>
-
-            <input type="text" name="_honey" class="checkout-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-            <div class="checkout-field">
-              <label for="order-name">Name <span class="checkout-required">*</span></label>
-              <input type="text" id="order-name" name="name" required autocomplete="name">
-            </div>
-
-            <div class="checkout-field">
-              <label for="order-phone">Phone <span class="checkout-required">*</span></label>
-              <input type="tel" id="order-phone" name="phone" required autocomplete="tel" placeholder="(904) 555-1234">
-            </div>
-
-            <div class="checkout-field">
-              <label for="order-email">Email <span class="checkout-optional">(optional)</span></label>
-              <input type="email" id="order-email" name="email" autocomplete="email">
-            </div>
-
-            <fieldset class="checkout-field checkout-fieldset">
-              <legend>Fulfillment <span class="checkout-required">*</span></legend>
-              <label class="checkout-radio">
-                <input type="radio" name="fulfillment" value="Pickup" checked>
-                Pickup
-              </label>
-              <label class="checkout-radio">
-                <input type="radio" name="fulfillment" value="Delivery">
-                Delivery
-              </label>
-            </fieldset>
-
-            <div class="checkout-field" id="order-address-field" hidden>
-              <label for="order-address">Delivery address <span class="checkout-required">*</span></label>
-              <input type="text" id="order-address" name="address" autocomplete="street-address" placeholder="Street, city, ZIP">
-            </div>
-
-            <div class="checkout-field">
-              <label for="order-datetime">Requested date &amp; time <span class="checkout-optional">(optional)</span></label>
-              <input type="text" id="order-datetime" name="requested_time" placeholder="e.g. Saturday morning">
-            </div>
-
-            <div class="checkout-field">
-              <label for="order-notes">Notes <span class="checkout-optional">(optional)</span></label>
-              <textarea id="order-notes" name="notes" rows="3" placeholder="Allergies, special requests, etc."></textarea>
-            </div>
+          <div class="checkout-form">
+            <h2 class="checkout-form-title">Secure checkout</h2>
+            <p class="checkout-form-lead">Pay online with Stripe. We will collect your email, phone, and delivery address on the next screen.</p>
 
             <p id="checkout-error" class="checkout-error" role="alert" hidden></p>
 
             <div class="checkout-actions">
-              <button type="submit" class="btn btn-cta" id="checkout-submit">Place Order</button>
+              <button type="button" class="btn btn-cta" id="checkout-submit">Checkout securely with Stripe</button>
               <a class="btn btn-outline" href="menu.html">Keep Shopping</a>
             </div>
 
-            <p class="contact-cta-note contact-cta-note--checkout">Local pickup or delivery in St. Augustine, FL. Questions? Call or text <a href="tel:+19042172764">(904) 217-2764</a>.</p>
-          </form>
-        </div>
-
-        <div id="checkout-success" class="checkout-success animate-in" hidden>
-          <div class="checkout-message">
-            <p><strong>Thank you! Your order was sent.</strong></p>
-            <p>We&rsquo;ll reach out soon to confirm pickup or delivery and payment details.</p>
-            <p>Questions? Call or text <a href="tel:+19042172764">(904) 217-2764</a>.</p>
-          </div>
-          <div class="checkout-actions">
-            <a class="btn btn-cta" href="menu.html">Back to Menu</a>
-            <a class="btn btn-outline" href="index.html">Home</a>
+            <p class="contact-cta-note contact-cta-note--checkout">Serving St. Augustine, FL. Questions? Call or text <a href="tel:+19042172764">(904) 217-2764</a>.</p>
           </div>
         </div>
       </section>

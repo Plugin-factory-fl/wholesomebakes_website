@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: wholesomebakes-checkout
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: ALLOWED_ORIGIN
+        value: https://shopwholesomebakes.com
