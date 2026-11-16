@@ -2,74 +2,44 @@ const PRODUCT_IMAGE_BASE = "Assets/Product%20Images/";
 
 const PRODUCTS = [
   {
-    id: 1,
-    name: "Chocolate Brownies",
-    images: [
-      PRODUCT_IMAGE_BASE + "26.jpeg",
-      PRODUCT_IMAGE_BASE + "27.jpeg",
-    ],
-    description:
-      "Rich, fudgy chocolate brownies baked in an 8×8 pan. Available gluten friendly or regular.",
-    glutenOptions: ["Gluten Friendly", "Regular"],
-    price: 15,
-    unit: "8×8 pan",
-    addOns: [
-      { id: "ganache", label: "Ganache frosting", price: 2 },
-      { id: "nuts", label: "Nuts", price: 2 },
-    ],
+    id: 101,
+    name: "Fresh Apple Cinnamon Muffins",
+    images: [PRODUCT_IMAGE_BASE + "applecinnamonmuffin.jpg"],
+    description: "Fresh apple cinnamon muffins, sold six for $12.",
+    price: 12,
+    unit: "6 muffins",
   },
   {
-    id: 2,
-    name: "Chocolate Chip Cookies",
-    images: [
-      PRODUCT_IMAGE_BASE + "13.jpg",
-      PRODUCT_IMAGE_BASE + "18.jpg",
-      PRODUCT_IMAGE_BASE + "23.jpeg",
-    ],
-    description:
-      "Chewy, buttery cookies loaded with chocolate chips. Available gluten friendly or regular.",
-    glutenOptions: ["Gluten Friendly", "Regular"],
-    variants: [
-      { id: "half", label: "1/2 dozen", price: 10, unit: "1/2 dozen" },
-      { id: "dozen", label: "1 dozen", price: 15, unit: "dozen" },
-    ],
+    id: 102,
+    name: "Triple Chocolate Pumpkin Bread",
+    images: [PRODUCT_IMAGE_BASE + "triplechocolatepumpkinbread.jpg"],
+    description: "Triple chocolate pumpkin bread, sold by the loaf.",
+    price: 10,
+    unit: "loaf",
   },
   {
-    id: 3,
-    name: "Sourdough Sandwich Bread",
-    images: [
-      PRODUCT_IMAGE_BASE + "6.jpg",
-      PRODUCT_IMAGE_BASE + "4.jpg",
-      PRODUCT_IMAGE_BASE + "1.jpg",
-      PRODUCT_IMAGE_BASE + "2.jpg",
-      PRODUCT_IMAGE_BASE + "21.jpeg",
-      PRODUCT_IMAGE_BASE + "22.jpeg",
-    ],
-    description:
-      "Classic 9×5 sourdough sandwich loaf — plain or with everything bagel seasoning.",
-    styleOptions: [
-      { id: "plain", label: "Plain" },
-      { id: "everything", label: "Everything bagel seasoning" },
-    ],
-    variants: [
-      { id: "single", label: "1 loaf (9×5)", price: 8, unit: "loaf" },
-      { id: "pair", label: "2 loaves", price: 12, unit: "2 loaves" },
-    ],
+    id: 103,
+    name: "GF Sandwich Bread",
+    images: [PRODUCT_IMAGE_BASE + "gfsandwichbread.jpg"],
+    description: "GF sandwich bread, sold by the loaf.",
+    price: 10,
+    unit: "loaf",
   },
   {
-    id: 4,
-    name: "Sunshine Lemon Bars",
-    images: [
-      PRODUCT_IMAGE_BASE + "16.jpg",
-      PRODUCT_IMAGE_BASE + "7.jpg",
-      PRODUCT_IMAGE_BASE + "24.jpeg",
-      PRODUCT_IMAGE_BASE + "25.jpeg",
-    ],
-    description:
-      "Bright, tangy lemon bars on a buttery shortbread crust in an 8×8 pan. Available gluten friendly or regular.",
-    glutenOptions: ["Gluten Friendly", "Regular"],
-    price: 15,
-    unit: "8×8 pan",
+    id: 104,
+    name: "Lemon Blueberry Scones",
+    images: [PRODUCT_IMAGE_BASE + "lemonblueberryscone.jpg"],
+    description: "Lemon blueberry scones, sold eight for $20.",
+    price: 20,
+    unit: "8 scones",
+  },
+  {
+    id: 105,
+    name: "Amish Bread",
+    images: [PRODUCT_IMAGE_BASE + "amishbread1.jpg"],
+    description: "Amish bread, sold by the loaf.",
+    price: 10,
+    unit: "loaf",
   },
 ];
 

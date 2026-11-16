@@ -18,9 +18,24 @@
     updateCartBadge();
   }
 
+  function pruneInvalidCartItems() {
+    if (typeof getProductById !== "function") return getCart();
+
+    const cart = getCart();
+    const valid = cart.filter(function (item) {
+      return item && getProductById(item.productId);
+    });
+
+    if (valid.length !== cart.length) {
+      saveCart(valid);
+    }
+
+    return valid;
+  }
+
   function getCartCount() {
     return getCart().reduce(function (sum, item) {
-      return sum + item.quantity;
+      return sum + (parseInt(item.quantity, 10) || 0);
     }, 0);
   }
 
@@ -151,10 +166,14 @@
     clearCart: clearCart,
     getCartCount: getCartCount,
     getCartWithDetails: getCartWithDetails,
+    pruneInvalidCartItems: pruneInvalidCartItems,
     updateCartBadge: updateCartBadge,
     PHONE_DISPLAY: PHONE_DISPLAY,
     PHONE_TEL: PHONE_TEL,
   };
 
-  document.addEventListener("DOMContentLoaded", updateCartBadge);
+  document.addEventListener("DOMContentLoaded", function () {
+    pruneInvalidCartItems();
+    updateCartBadge();
+  });
 })();
