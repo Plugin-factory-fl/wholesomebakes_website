@@ -107,7 +107,7 @@
         item.price.toFixed(2) +
         " / " +
         item.unit +
-        ") — $" +
+        "): $" +
         item.lineTotal.toFixed(2)
       );
     });
@@ -219,7 +219,7 @@
 
     const orderMessage = buildOrderMessage(data, cartItems, orderTotal);
     const payload = {
-      _subject: "New Wholesome Bakes Order — " + data.name,
+      _subject: "New Wholesome Bakes Order: " + data.name,
       _captcha: "false",
       _template: "table",
       name: data.name,

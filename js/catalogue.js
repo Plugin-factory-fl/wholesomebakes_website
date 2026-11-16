@@ -62,7 +62,7 @@
           (index === 0 ? " checked" : "") +
           "> " +
           escapeHtml(variant.label) +
-          " — $" +
+          ": $" +
           variant.price +
           "</label>";
       });

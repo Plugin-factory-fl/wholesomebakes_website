@@ -32,7 +32,7 @@
       toastEl.hidden = true;
       toastEl.innerHTML =
         "<p><strong>What is Gluten Friendly?</strong></p>" +
-        "<p>Our baked goods are made with care for those avoiding gluten — using thoughtful ingredient choices and kitchen practices designed to keep gluten levels as low as possible while still delivering the flavor and texture you love.</p>" +
+        "<p>Our baked goods are made with care for those avoiding gluten, using thoughtful ingredient choices and kitchen practices designed to keep gluten levels as low as possible while still delivering the flavor and texture you love.</p>" +
         '<button type="button" class="toast-close" aria-label="Close">×</button>';
       document.body.appendChild(toastEl);
 
