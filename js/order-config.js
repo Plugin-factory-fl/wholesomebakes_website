@@ -1,5 +1,4 @@
 window.WholesomeOrderConfig = {
-  // Set this to your Render checkout API base URL after deploy (no trailing slash).
-  // Example: "https://wholesomebakes-checkout.onrender.com"
-  CHECKOUT_API_URL: "",
+  // Render checkout API base URL (no trailing slash).
+  CHECKOUT_API_URL: "https://wholesomebakes-checkout.onrender.com",
 };
