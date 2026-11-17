@@ -45,7 +45,7 @@
         </header>
 
         <div class="about-intro animate-in">
-          <img class="about-photo-main" src="Assets/Event%20Images/4.jpg" alt="Mama Miller, founder of Wholesome Bakes">
+          <img class="about-photo-main events-photo--4" src="Assets/Event%20Images/4.jpg" alt="Mama Miller, founder of Wholesome Bakes">
           <div>
             <h2>Mama Miller, Founder</h2>
             <div class="about-bio">
@@ -57,16 +57,43 @@
           </div>
         </div>
 
-        <div class="animate-in">
-          <h2>Out &amp; About in St. Augustine</h2>
+        <div class="animate-in events-showcase">
+          <h2>Out and About in St. Augustine</h2>
           <p>From farmers markets to community gatherings, Mama Miller loves connecting with customers face to face. Here is a glimpse of Wholesome Bakes in the community.</p>
-          <div class="events-grid">
-            <img src="Assets/Event%20Images/1.jpg" alt="Wholesome Bakes at a St. Augustine event">
-            <img src="Assets/Event%20Images/3.jpg" alt="Mama Miller serving baked goods">
-            <img src="Assets/Event%20Images/5.jpg" alt="Wholesome Bakes community pop-up">
-            <img src="Assets/Event%20Images/2.jpg" alt="Local baking event in Florida">
-            <img src="Assets/Event%20Images/4.jpg" alt="Gluten friendly treats at a market">
-            <img src="Assets/Event%20Images/6.jpg" alt="Wholesome Bakes booth">
+          <div
+            class="events-carousel"
+            data-events-carousel
+            aria-roledescription="carousel"
+            aria-label="Out and about in St. Augustine photo gallery"
+          >
+            <div class="events-carousel-frame">
+              <button type="button" class="events-carousel-btn events-carousel-btn--prev" data-carousel-prev aria-label="Previous photo">‹</button>
+              <div class="events-carousel-viewport" data-carousel-viewport tabindex="0">
+                <ul class="events-carousel-track" data-carousel-track>
+                  <li class="events-carousel-slide is-active" data-carousel-slide>
+                    <img class="events-photo events-photo--1" src="Assets/Event%20Images/1.jpg" alt="Wholesome Bakes at a St. Augustine event" width="720" height="960">
+                  </li>
+                  <li class="events-carousel-slide" data-carousel-slide>
+                    <img class="events-photo events-photo--2" src="Assets/Event%20Images/2.jpg" alt="Mama Miller at a local baking event in Florida" width="960" height="720">
+                  </li>
+                  <li class="events-carousel-slide" data-carousel-slide>
+                    <img class="events-photo events-photo--3" src="Assets/Event%20Images/3.jpg" alt="Mama Miller serving baked goods" width="720" height="960">
+                  </li>
+                  <li class="events-carousel-slide" data-carousel-slide>
+                    <img class="events-photo events-photo--4" src="Assets/Event%20Images/4.jpg" alt="Mama Miller at a gluten friendly market booth" width="720" height="960">
+                  </li>
+                  <li class="events-carousel-slide" data-carousel-slide>
+                    <img class="events-photo events-photo--5" src="Assets/Event%20Images/5.jpg" alt="Wholesome Bakes community pop-up display" width="720" height="960">
+                  </li>
+                  <li class="events-carousel-slide" data-carousel-slide>
+                    <img class="events-photo events-photo--6" src="Assets/Event%20Images/6.jpg" alt="Wholesome Bakes booth" width="720" height="960">
+                  </li>
+                </ul>
+              </div>
+              <button type="button" class="events-carousel-btn events-carousel-btn--next" data-carousel-next aria-label="Next photo">›</button>
+            </div>
+            <div class="events-carousel-dots" data-carousel-dots role="tablist" aria-label="Choose a photo"></div>
+            <p class="events-carousel-status" data-carousel-status aria-live="polite"></p>
           </div>
         </div>
 
@@ -90,6 +117,7 @@
   <script src="js/analytics.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/contact-modal.js"></script>
+  <script src="js/events-carousel.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
