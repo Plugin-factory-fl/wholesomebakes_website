@@ -1,5 +1,12 @@
 const PRODUCT_IMAGE_BASE = "Assets/Product%20Images/";
 
+const FLOUR_VARIANTS = Object.freeze([
+  { id: "gluten_free", label: "Gluten Free" },
+  { id: "regular", label: "Regular" },
+]);
+
+const DEFAULT_FLOUR_VARIANT = "gluten_free";
+
 const PRODUCTS = [
   {
     id: 101,
@@ -65,23 +72,49 @@ function getProductById(id) {
   });
 }
 
+function getFlourVariant(id) {
+  return (
+    FLOUR_VARIANTS.find(function (option) {
+      return option.id === id;
+    }) || null
+  );
+}
+
+function normalizeFlourVariant(value) {
+  const variant = getFlourVariant(value);
+  return variant ? variant.id : DEFAULT_FLOUR_VARIANT;
+}
+
+function getFlourLabel(value) {
+  const variant = getFlourVariant(normalizeFlourVariant(value));
+  return variant ? variant.label : "Gluten Free";
+}
+
 function normalizeSelections(product, selections) {
+  const source = selections || {};
   const normalized = {
-    gluten: selections.gluten || null,
-    style: selections.style || null,
-    variant: selections.variant || null,
-    addOns: Array.isArray(selections.addOns) ? selections.addOns.slice().sort() : [],
+    flour: normalizeFlourVariant(source.flour || source.variant || DEFAULT_FLOUR_VARIANT),
+    gluten: source.gluten || null,
+    style: source.style || null,
+    variant: source.variant || null,
+    addOns: Array.isArray(source.addOns) ? source.addOns.slice().sort() : [],
   };
 
-  if (product.glutenOptions && !normalized.gluten) {
+  // Keep flour as the diet/flour selector; strip size-variant collision when
+  // the product does not define priced size variants.
+  if (!product || !product.variants) {
+    normalized.variant = null;
+  }
+
+  if (product && product.glutenOptions && !normalized.gluten) {
     normalized.gluten = product.glutenOptions[0];
   }
 
-  if (product.styleOptions && !normalized.style) {
+  if (product && product.styleOptions && !normalized.style) {
     normalized.style = product.styleOptions[0].id;
   }
 
-  if (product.variants && !normalized.variant) {
+  if (product && product.variants && !normalized.variant) {
     normalized.variant = product.variants[0].id;
   }
 
@@ -89,7 +122,7 @@ function normalizeSelections(product, selections) {
 }
 
 function buildLineId(productId, selections) {
-  const parts = [String(productId)];
+  const parts = [String(productId), "f:" + normalizeFlourVariant(selections.flour)];
 
   if (selections.gluten) parts.push("g:" + selections.gluten);
   if (selections.style) parts.push("s:" + selections.style);
@@ -107,7 +140,8 @@ function resolveCartLine(product, rawSelections) {
   const selections = normalizeSelections(product, rawSelections || {});
   let unitPrice = product.price || 0;
   let unit = product.unit || "each";
-  const detailParts = [];
+  const flourLabel = getFlourLabel(selections.flour);
+  const detailParts = [flourLabel];
 
   if (product.glutenOptions && selections.gluten) {
     detailParts.push(selections.gluten);
@@ -150,6 +184,9 @@ function resolveCartLine(product, rawSelections) {
     productId: product.id,
     selections: selections,
     name: product.name,
+    displayName: product.name + " (" + flourLabel + ")",
+    flour: selections.flour,
+    flourLabel: flourLabel,
     image: getProductImage(product),
     unitPrice: unitPrice,
     unit: unit,
@@ -180,18 +217,6 @@ function getFeaturedUnitLabel(product) {
 
 function getFeaturedSummary(product) {
   const parts = [getFeaturedPriceLabel(product) + " / " + getFeaturedUnitLabel(product)];
-
-  if (product.glutenOptions) {
-    parts.push("Gluten friendly or regular");
-  }
-
-  if (product.addOns && product.addOns.length) {
-    parts.push("Add-ons available");
-  }
-
-  if (product.styleOptions) {
-    parts.push("Plain or everything bagel seasoning");
-  }
-
+  parts.push("Gluten Free by default");
   return parts.join(" · ");
 }

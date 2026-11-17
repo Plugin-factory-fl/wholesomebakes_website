@@ -50,7 +50,7 @@
         item.name +
         "</strong>" +
         '<span class="checkout-line-meta">' +
-        (item.details ? item.details + " · " : "") +
+        (item.flourLabel ? item.flourLabel + " · " : "") +
         money(item.price) +
         " / " +
         item.unit +
@@ -173,12 +173,13 @@
   }
 
   function buildPayload() {
-    const cart = window.WholesomeCart.getCart();
+    const cart = window.WholesomeCart.getCartWithDetails();
     return {
       items: cart.map(function (item) {
         return {
           productId: item.productId,
           quantity: item.quantity,
+          variant: item.flour || "gluten_free",
         };
       }),
     };

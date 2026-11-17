@@ -10,8 +10,35 @@
       .replace(/"/g, "&quot;");
   }
 
+  function buildFlourToggleHtml(product) {
+    let html =
+      '<div class="flour-toggle" role="radiogroup" aria-label="Flour type for ' +
+      escapeHtml(product.name) +
+      '">';
+
+    FLOUR_VARIANTS.forEach(function (option) {
+      const checked = option.id === DEFAULT_FLOUR_VARIANT ? " checked" : "";
+      html +=
+        '<label class="flour-toggle-option">' +
+        '<input type="radio" name="flour-' +
+        product.id +
+        '" value="' +
+        escapeHtml(option.id) +
+        '"' +
+        checked +
+        ">" +
+        "<span>" +
+        escapeHtml(option.label) +
+        "</span>" +
+        "</label>";
+    });
+
+    html += "</div>";
+    return html;
+  }
+
   function buildOptionsHtml(product) {
-    let html = '<div class="catalogue-options">';
+    let html = '<div class="catalogue-options">' + buildFlourToggleHtml(product);
 
     if (product.glutenOptions) {
       html += '<fieldset class="catalogue-fieldset"><legend>Type</legend>';
@@ -70,7 +97,7 @@
     }
 
     if (product.addOns) {
-      html += '<fieldset class="catalogue-fieldset"><legend>Add-ons (+$2 each)</legend>';
+      html += '<fieldset class="catalogue-fieldset"><legend>Add ons (+$2 each)</legend>';
       product.addOns.forEach(function (addOn) {
         html +=
           '<label class="catalogue-choice"><input type="checkbox" name="addon-' +
@@ -98,22 +125,21 @@
       return (
         '<p class="catalogue-price" data-price-display>$' +
         resolved.unitPrice.toFixed(2) +
-        ' <span>/ ' +
+        " <span>/ " +
         escapeHtml(resolved.unit) +
         "</span></p>"
       );
     }
 
-    let label = "$" + product.price + " / " + product.unit;
-    if (product.addOns && product.addOns.length) {
-      label += " · add-ons +$2";
-    }
-
+    const label = "$" + product.price + " / " + product.unit;
     return '<p class="catalogue-price" data-price-display>' + escapeHtml(label) + "</p>";
   }
 
   function readSelections(card, product) {
     const selections = { addOns: [] };
+
+    const flourInput = card.querySelector('input[name="flour-' + product.id + '"]:checked');
+    if (flourInput) selections.flour = flourInput.value;
 
     const glutenInput = card.querySelector('input[name="gluten-' + product.id + '"]:checked');
     if (glutenInput) selections.gluten = glutenInput.value;
@@ -148,14 +174,7 @@
       return;
     }
 
-    let label = "$" + resolved.unitPrice.toFixed(2) + " / " + product.unit;
-    if (product.addOns && product.addOns.length && resolved.selections.addOns.length) {
-      label += " · with add-ons";
-    } else if (product.addOns && product.addOns.length) {
-      label += " · add-ons +$2";
-    }
-
-    priceEl.textContent = label;
+    priceEl.textContent = "$" + resolved.unitPrice.toFixed(2) + " / " + product.unit;
   }
 
   function buildImageHtml(product) {
@@ -273,6 +292,7 @@
         product_id: String(productId),
         product_name: product.name,
         quantity: qty,
+        flour: selections.flour,
         item_details: resolveCartLine(product, selections).details,
       });
     }

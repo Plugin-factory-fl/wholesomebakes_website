@@ -5,6 +5,7 @@ const {
   buildCheckoutSessionParams,
   buildLineItems,
   buildCartSummary,
+  DEFAULT_VARIANT,
 } = require("../src/checkout");
 const { PRODUCTS } = require("../src/catalog");
 
@@ -39,9 +40,46 @@ describe("validateCartItems", function () {
     assert.equal(result.items.length, 2);
     assert.equal(result.items[0].unitAmount, 1200);
     assert.equal(result.items[1].unitAmount, 1000);
+    assert.equal(result.items[0].variant, DEFAULT_VARIANT);
+    assert.equal(result.items[0].variantLabel, "Gluten Free");
   });
 
-  it("merges duplicate product ids", function () {
+  it("defaults missing variant to gluten_free", function () {
+    const result = validateCartItems([{ productId: 103, quantity: 1 }]);
+    assert.equal(result.ok, true);
+    assert.equal(result.items[0].variant, "gluten_free");
+    assert.equal(result.items[0].variantLabel, "Gluten Free");
+  });
+
+  it("rejects invalid variants", function () {
+    const result = validateCartItems([
+      { productId: 101, quantity: 1, variant: "sugar_free" },
+    ]);
+    assert.equal(result.ok, false);
+    assert.match(result.error, /Variant must be gluten_free or regular/);
+  });
+
+  it("keeps gluten_free and regular as separate lines", function () {
+    const result = validateCartItems([
+      { productId: 102, quantity: 2, variant: "gluten_free" },
+      { productId: 102, quantity: 3, variant: "regular" },
+      { productId: 102, quantity: 1, variant: "gluten_free" },
+    ]);
+    assert.equal(result.ok, true);
+    assert.equal(result.items.length, 2);
+    const gf = result.items.find(function (item) {
+      return item.variant === "gluten_free";
+    });
+    const regular = result.items.find(function (item) {
+      return item.variant === "regular";
+    });
+    assert.equal(gf.quantity, 3);
+    assert.equal(regular.quantity, 3);
+    assert.equal(gf.unitAmount, 1000);
+    assert.equal(regular.unitAmount, 1000);
+  });
+
+  it("merges duplicate product ids with the same variant", function () {
     const result = validateCartItems([
       { productId: 102, quantity: 2 },
       { productId: 102, quantity: 3 },
@@ -54,10 +92,10 @@ describe("validateCartItems", function () {
 });
 
 describe("buildCheckoutSessionParams", function () {
-  it("builds Stripe session payload from server catalog prices", function () {
+  it("builds Stripe session payload with variant names and metadata", function () {
     const validated = validateCartItems([
-      { productId: 101, quantity: 1 },
-      { productId: 104, quantity: 2 },
+      { productId: 101, quantity: 1, variant: "gluten_free" },
+      { productId: 104, quantity: 2, variant: "regular" },
     ]);
     assert.equal(validated.ok, true);
 
@@ -72,7 +110,7 @@ describe("buildCheckoutSessionParams", function () {
     assert.equal(params.custom_fields[0].key, "order_notes");
     assert.equal(params.custom_fields[0].optional, true);
     assert.equal(params.custom_fields[0].label.custom, "Order notes");
-    assert.equal(params.metadata.cart_summary, "101x1,104x2");
+    assert.equal(params.metadata.cart_summary, "101:gluten_free:x1,104:regular:x2");
     assert.match(params.success_url, /order-success\.html\?session_id=\{CHECKOUT_SESSION_ID\}$/);
     assert.equal(params.cancel_url, "https://shopwholesomebakes.com/checkout.html");
 
@@ -81,13 +119,27 @@ describe("buildCheckoutSessionParams", function () {
     assert.equal(lineItems[0].quantity, 1);
     assert.equal(lineItems[0].price_data.currency, "usd");
     assert.equal(lineItems[0].price_data.unit_amount, 1200);
-    assert.equal(lineItems[0].price_data.product_data.name, "Fresh Apple Cinnamon Muffins");
+    assert.equal(
+      lineItems[0].price_data.product_data.name,
+      "Fresh Apple Cinnamon Muffins (Gluten Free)"
+    );
+    assert.equal(lineItems[0].price_data.product_data.description, "Gluten Free");
+    assert.equal(lineItems[0].price_data.product_data.metadata.variant, "gluten_free");
+    assert.equal(
+      lineItems[0].price_data.product_data.metadata.variant_label,
+      "Gluten Free"
+    );
     assert.match(
       lineItems[0].price_data.product_data.images[0],
       /^https:\/\/shopwholesomebakes\.com\/Assets\/Product%20Images\//
     );
     assert.equal(lineItems[1].price_data.unit_amount, 2000);
     assert.equal(lineItems[1].quantity, 2);
+    assert.equal(
+      lineItems[1].price_data.product_data.name,
+      "Lemon Blueberry Scones (Regular)"
+    );
+    assert.equal(lineItems[1].price_data.product_data.metadata.variant, "regular");
   });
 
   it("covers all five catalog products with expected cents", function () {
@@ -113,8 +165,12 @@ describe("buildCheckoutSessionParams", function () {
     assert.equal(lineItems.length, 5);
     lineItems.forEach(function (line, index) {
       assert.equal(line.price_data.unit_amount, PRODUCTS[index].unitAmount);
+      assert.match(line.price_data.product_data.name, /\(Gluten Free\)$/);
     });
 
-    assert.equal(buildCartSummary(validated.items), "101x1,102x1,103x1,104x1,105x1");
+    assert.equal(
+      buildCartSummary(validated.items),
+      "101:gluten_free:x1,102:gluten_free:x1,103:gluten_free:x1,104:gluten_free:x1,105:gluten_free:x1"
+    );
   });
 });

@@ -3,13 +3,38 @@ const { getProductById } = require("./catalog");
 const MIN_QTY = 1;
 const MAX_QTY = 50;
 
+const ALLOWED_VARIANTS = Object.freeze({
+  gluten_free: "Gluten Free",
+  regular: "Regular",
+});
+
+const DEFAULT_VARIANT = "gluten_free";
+
 function isPlainObject(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
+function normalizeVariant(value) {
+  if (typeof value !== "string" || !value) return DEFAULT_VARIANT;
+  const key = value.trim().toLowerCase().replace(/[\s-]+/g, "_");
+  if (Object.prototype.hasOwnProperty.call(ALLOWED_VARIANTS, key)) {
+    return key;
+  }
+  return null;
+}
+
+function variantLabel(variantId) {
+  return ALLOWED_VARIANTS[variantId] || ALLOWED_VARIANTS[DEFAULT_VARIANT];
+}
+
+function lineKey(productId, variant) {
+  return String(productId) + ":" + variant;
+}
+
 /**
  * Validate and normalize cart items from the client.
- * Client may only send productId + quantity. Prices come from the server catalog.
+ * Client may send productId, quantity, and optional variant.
+ * Prices come from the server catalog.
  */
 function validateCartItems(rawItems) {
   if (!Array.isArray(rawItems) || rawItems.length === 0) {
@@ -42,53 +67,69 @@ function validateCartItems(rawItems) {
       };
     }
 
-    const existing = merged.get(productId) || 0;
-    const nextQty = existing + quantity;
+    let variant = DEFAULT_VARIANT;
+    if (entry.variant != null && String(entry.variant).trim() !== "") {
+      const normalized = normalizeVariant(entry.variant);
+      if (!normalized) {
+        return {
+          ok: false,
+          error: "Variant must be gluten_free or regular.",
+        };
+      }
+      variant = normalized;
+    }
+
+    const key = lineKey(productId, variant);
+    const existing = merged.get(key);
+    const nextQty = (existing ? existing.quantity : 0) + quantity;
     if (nextQty > MAX_QTY) {
       return {
         ok: false,
         error: "Quantity for " + product.name + " cannot exceed " + MAX_QTY + ".",
       };
     }
-    merged.set(productId, nextQty);
-  }
 
-  const items = Array.from(merged.entries()).map(function ([productId, quantity]) {
-    const product = getProductById(productId);
-    return {
+    merged.set(key, {
       productId: product.id,
       name: product.name,
-      quantity: quantity,
+      quantity: nextQty,
       unitAmount: product.unitAmount,
       unitLabel: product.unitLabel,
       image: product.image,
-    };
-  });
+      variant: variant,
+      variantLabel: variantLabel(variant),
+    });
+  }
 
+  const items = Array.from(merged.values());
   return { ok: true, items: items };
 }
 
 function buildCartSummary(items) {
   return items
     .map(function (item) {
-      return item.productId + "x" + item.quantity;
+      return item.productId + ":" + item.variant + ":x" + item.quantity;
     })
     .join(",");
 }
 
 function buildLineItems(items) {
   return items.map(function (item) {
+    const displayName = item.name + " (" + item.variantLabel + ")";
     return {
       quantity: item.quantity,
       price_data: {
         currency: "usd",
         unit_amount: item.unitAmount,
         product_data: {
-          name: item.name,
+          name: displayName,
+          description: item.variantLabel,
           images: [item.image],
           metadata: {
             product_id: String(item.productId),
             unit_label: item.unitLabel,
+            variant: item.variant,
+            variant_label: item.variantLabel,
           },
         },
       },
@@ -138,6 +179,10 @@ function buildCheckoutSessionParams(items, urls) {
 module.exports = {
   MIN_QTY,
   MAX_QTY,
+  ALLOWED_VARIANTS,
+  DEFAULT_VARIANT,
+  normalizeVariant,
+  variantLabel,
   validateCartItems,
   buildCartSummary,
   buildLineItems,

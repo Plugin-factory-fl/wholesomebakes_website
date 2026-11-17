@@ -126,19 +126,46 @@
           productId: item.productId,
           quantity: item.quantity,
           name: resolved.name,
+          displayName: resolved.displayName,
+          flour: resolved.flour,
+          flourLabel: resolved.flourLabel,
           price: resolved.unitPrice,
           unit: resolved.unit,
           image: resolved.image,
           details: resolved.details,
+          selections: resolved.selections,
           lineTotal: resolved.unitPrice * item.quantity,
         };
       })
       .filter(Boolean);
   }
 
+  function updateCartNav(count) {
+    document.querySelectorAll(".sidebar-cart-link").forEach(function (link) {
+      const label = link.querySelector("[data-cart-nav-label]");
+      const badge = link.querySelector("[data-cart-count]");
+
+      if (count > 0) {
+        link.classList.add("sidebar-cart-link--checkout");
+        if (label) label.textContent = "Check Out";
+        link.setAttribute("aria-label", "Check out with " + count + " items");
+      } else {
+        link.classList.remove("sidebar-cart-link--checkout");
+        if (label) label.textContent = "Cart";
+        link.setAttribute("aria-label", "Cart");
+      }
+
+      if (badge) {
+        badge.textContent = String(count);
+        badge.hidden = count === 0;
+      }
+    });
+  }
+
   function updateCartBadge() {
-    const badges = document.querySelectorAll("[data-cart-count]");
     const count = getCartCount();
+    updateCartNav(count);
+    const badges = document.querySelectorAll("[data-cart-count]");
     badges.forEach(function (el) {
       el.textContent = String(count);
       el.hidden = count === 0;
@@ -175,8 +202,8 @@
       return;
     }
 
-    sticky.textContent = "Cart (" + count + ")";
-    sticky.setAttribute("aria-label", "View cart with " + count + " items");
+    sticky.textContent = "Check Out (" + count + ")";
+    sticky.setAttribute("aria-label", "Check out with " + count + " items");
     sticky.hidden = false;
     if (main) main.classList.add("main-content--has-sticky-cart");
     requestAnimationFrame(function () {
