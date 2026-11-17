@@ -68,7 +68,10 @@ function validateCartItems(rawItems) {
     }
 
     let variant = DEFAULT_VARIANT;
-    if (entry.variant != null && String(entry.variant).trim() !== "") {
+    if (product.fixedVariant) {
+      // GF Sandwich Bread and any other fixed-variant items stay gluten free.
+      variant = normalizeVariant(product.fixedVariant) || DEFAULT_VARIANT;
+    } else if (entry.variant != null && String(entry.variant).trim() !== "") {
       const normalized = normalizeVariant(entry.variant);
       if (!normalized) {
         return {

@@ -31,6 +31,7 @@ const PRODUCTS = [
     description: "GF sandwich bread, sold by the loaf.",
     price: 10,
     unit: "loaf",
+    fixedFlourVariant: "gluten_free",
   },
   {
     id: 104,
@@ -92,8 +93,12 @@ function getFlourLabel(value) {
 
 function normalizeSelections(product, selections) {
   const source = selections || {};
+  const fixedFlour =
+    product && product.fixedFlourVariant
+      ? normalizeFlourVariant(product.fixedFlourVariant)
+      : null;
   const normalized = {
-    flour: normalizeFlourVariant(source.flour || source.variant || DEFAULT_FLOUR_VARIANT),
+    flour: fixedFlour || normalizeFlourVariant(source.flour || source.variant || DEFAULT_FLOUR_VARIANT),
     gluten: source.gluten || null,
     style: source.style || null,
     variant: source.variant || null,

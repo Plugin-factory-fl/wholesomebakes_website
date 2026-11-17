@@ -26,6 +26,7 @@ const PRODUCTS = Object.freeze([
     unitAmount: 1000,
     unitLabel: "loaf",
     image: `${IMAGE_BASE}gfsandwichbread.jpg`,
+    fixedVariant: "gluten_free",
   },
   {
     id: 104,

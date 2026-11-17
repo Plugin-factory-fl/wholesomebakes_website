@@ -11,6 +11,14 @@
   }
 
   function buildFlourToggleHtml(product) {
+    if (product.fixedFlourVariant) {
+      return (
+        '<p class="flour-fixed-note">' +
+        escapeHtml(getFlourLabel(product.fixedFlourVariant)) +
+        "</p>"
+      );
+    }
+
     let html =
       '<div class="flour-toggle" role="radiogroup" aria-label="Flour type for ' +
       escapeHtml(product.name) +
@@ -138,8 +146,12 @@
   function readSelections(card, product) {
     const selections = { addOns: [] };
 
-    const flourInput = card.querySelector('input[name="flour-' + product.id + '"]:checked');
-    if (flourInput) selections.flour = flourInput.value;
+    if (product.fixedFlourVariant) {
+      selections.flour = product.fixedFlourVariant;
+    } else {
+      const flourInput = card.querySelector('input[name="flour-' + product.id + '"]:checked');
+      if (flourInput) selections.flour = flourInput.value;
+    }
 
     const glutenInput = card.querySelector('input[name="gluten-' + product.id + '"]:checked');
     if (glutenInput) selections.gluten = glutenInput.value;

@@ -1353,6 +1353,21 @@ button.btn {
   margin: 0 0 1rem;
 }
 
+.flour-fixed-note {
+  display: inline-block;
+  margin: 0 0 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 123, 123, 0.28);
+  background: rgba(255, 252, 248, 0.92);
+  color: var(--rose-deep);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .flour-toggle {
   display: inline-grid;
   grid-template-columns: 1fr 1fr;

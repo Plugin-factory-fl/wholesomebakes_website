@@ -59,6 +59,16 @@ describe("validateCartItems", function () {
     assert.match(result.error, /Variant must be gluten_free or regular/);
   });
 
+  it("forces GF Sandwich Bread to gluten_free even if regular is sent", function () {
+    const result = validateCartItems([
+      { productId: 103, quantity: 1, variant: "regular" },
+    ]);
+    assert.equal(result.ok, true);
+    assert.equal(result.items.length, 1);
+    assert.equal(result.items[0].variant, "gluten_free");
+    assert.equal(result.items[0].variantLabel, "Gluten Free");
+  });
+
   it("keeps gluten_free and regular as separate lines", function () {
     const result = validateCartItems([
       { productId: 102, quantity: 2, variant: "gluten_free" },
